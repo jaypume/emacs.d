@@ -41,7 +41,11 @@
 )
 (global-set-key [remap comment-or-uncomment-region] 'my-comment-or-uncomment-region)
 
-
+;;2015.12.08 设置窗口标记
+(require 'window-numbering)
+(window-numbering-mode 1)
+;; (setq window-numbering-assign-func
+      ;; (lambda () (when (equal (buffer-name) "*Calculator*") 9)))
 
 ;;----------------------------------------------------------------------------
 ;; 普杰的配置  the end
