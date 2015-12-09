@@ -2,60 +2,6 @@
 (defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
 ;; (defconst *is-a-mac* (eq system-type 'darwin))
 
-
-;;----------------------------------------------------------------------------
-;; 普杰的配置
-;;----------------------------------------------------------------------------
-;;2015.12.04  设置打开文件的时候不打开新的窗口
-(setq ns-pop-up-frames nil)
-;;2015.12.04  添加multi-term支持
-(require 'multi-term)
-(setq multi-term-program "/bin/zsh")
-
-;;2015.12.08 解决中文终端乱码的问题
-(setenv "LANG" "zh_CN.UTF-8")
-
-;;2015.12.08 设置环境变量为git
-;;; Set localized PATH for OS X
-(defun my-add-path (path-element)
-  "Add the specified PATH-ELEMENT to the Emacs PATH."
-  (interactive "DEnter directory to be added to path: ")
-  (if (file-directory-p path-element)
-     (progn
-       (setenv "PATH" (concat (expand-file-name path-element) path-separator (getenv "PATH")))
-       (add-to-list 'exec-path (expand-file-name path-element)))))
-
-(if (fboundp 'my-add-path)
-   (let ((my-paths (list "/opt/local/bin" "/usr/local/bin" "/usr/local/git/bin")))
-      (dolist (path-to-add my-paths (getenv "PATH"))
-        (my-add-path path-to-add))))
-
-;;2015.12.08 设置注释或者反注释快捷键
-(global-set-key (kbd "C-c C-/") 'comment-or-uncomment-region)
-(defun my-comment-or-uncomment-region (beg end &optional arg)
-  (interactive (if (use-region-p)
-                   (list (region-beginning) (region-end) nil)
-                 (list (line-beginning-position)
-                       (line-beginning-position 2))))
-  (comment-or-uncomment-region beg end arg)
-)
-(global-set-key [remap comment-or-uncomment-region] 'my-comment-or-uncomment-region)
-
-;;2015.12.08 设置窗口标记
-(require 'window-numbering)
-(window-numbering-mode 1)
-;; (setq window-numbering-assign-func
-      ;; (lambda () (when (equal (buffer-name) "*Calculator*") 9)))
-
-;;----------------------------------------------------------------------------
-;; 普杰的配置  the end
-;;----------------------------------------------------------------------------
-
-
-
-
-
-
 ;;----------------------------------------------------------------------------
 ;; Bootstrap config
 ;;----------------------------------------------------------------------------
@@ -190,6 +136,8 @@
 ;;              (message "init completed in %.2fms"
 ;;                       (sanityinc/time-subtract-millis after-init-time before-init-time))))
 
+;;普杰的乱七八糟的配置都在这里
+(require 'init-heizi)
 
 (provide 'init)
 
@@ -198,9 +146,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default))))
+    ("196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
+ '(org-directory "~/Dropbox/Documents/Emacs-org/"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
