@@ -37,11 +37,6 @@
 )
 (global-set-key [remap comment-or-uncomment-region] 'my-comment-or-uncomment-region)
 
-;;2015.12.08 设置窗口标记
-(mapc (lambda (mode)
-      (add-hook 'after-init-hook mode))
-      (list 'winner-mode
-            'window-numbering-mode))
 ;; (setq window-numbering-mode t)
 
 ;;2015.12.09 默认开启sr-speedbar
@@ -50,17 +45,27 @@
 ;;2015.12.09 org mode 相关设置
 (setq org-image-actual-width 300)
 
-;; (setq org-default-notes-file (concat org-directory "note.org"))
-;; (define-key global-map "\C-cc" 'org-capture)
 
 (setq sr-speedbar-width 30)
 (setq sr-speedbar-auto-refresh nil)
 (setq sr-speedbar-right-side nil)
- ;;  '(sr-speedbar-auto-refresh nil)
- ;; '(sr-speedbar-default-width 30)
- ;; '(sr-speedbar-right-side nil))
+;;(setq sr-speedbar-toggle t)
 
 
+
+;; (global-set-key (kbd "C-RET") 'set-mark-command)
+;; 没有测试成功，这个快捷键
+;; (define-key global-map [C-return] 'set-mark-command)
+
+;;------------------------------------------------------------------------------
+;;2015.12.08 设置初始化之后的加载项
+;;------------------------------------------------------------------------------
+(mapc (lambda (mode)
+      (add-hook 'after-init-hook mode))
+      (list 'winner-mode
+            'window-numbering-mode
+            'sr-speedbar-toggle
+      ))
 ;;----------------------------------------------------------------------------
 ;; 普杰的配置  the end
 ;;----------------------------------------------------------------------------

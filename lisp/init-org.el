@@ -82,6 +82,14 @@
 ;; use org-toc
 (add-hook 'org-mode-hook 'toc-org-enable)
 
+;;设置org的有关的默认位置
+(add-hook 'org-mode-hook
+          (lambda()
+            (setq org-default-notes-file (concat org-directory "note.org"))
+            (define-key global-map "\C-cc" 'org-capture)
+            ;; (define-key global-map "\C-," 'org-iswitchb)
+          ))
+
 ;; enable markdown-exporting to the export menu
 (eval-after-load "org"
   '(require 'ox-md nil t))
