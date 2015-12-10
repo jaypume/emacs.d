@@ -10,14 +10,14 @@
 ;;2015.12.06 添加latexmk编译方式
 ;; make latexmk available via C-c C-c
 ;; Note: SyncTeX is setup via ~/.latexmkrc (see below)
-(require 'auctex-latexmk)
-(auctex-latexmk-setup)
-(add-hook 'LaTeX-mode-hook (lambda ()
-  (push
-    '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t
-      :help "Run latexmk on file")
-    TeX-command-list)))
-(add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
+;;(require 'auctex-latexmk)
+;;(auctex-latexmk-setup)
+;;(add-hook 'LaTeX-mode-hook (lambda ()
+;;  (push
+;;    '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t
+;;      :help "Run latexmk on file")
+;;    TeX-command-list)))
+;;(add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
 
 ;; 2015.12.07 添加xelatex编译
 (add-hook 'LaTeX-mode-hook 
