@@ -4,4 +4,5 @@
 
 ;; 修改默认的字体大小为14
 (set-default-font "-*-Menlo-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+(set-fontset-font "fontset-default" 'han '("STHeiti"))
 (provide 'init-fonts)
