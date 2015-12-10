@@ -37,20 +37,18 @@
 )
 (global-set-key [remap comment-or-uncomment-region] 'my-comment-or-uncomment-region)
 
-;; (setq window-numbering-mode t)
-
-;;2015.12.09 默认开启sr-speedbar
-;;(sr-speedbar-toggle t)
-
 ;;2015.12.09 org mode 相关设置
 (setq org-image-actual-width 300)
 
-
+;; sr-speedbar 安装和设置
+(require-package 'sr-speedbar)
 (setq sr-speedbar-width 30)
 (setq sr-speedbar-auto-refresh nil)
 (setq sr-speedbar-right-side nil)
 ;;(setq sr-speedbar-toggle t)
 
+;; window-numbering 安装和设置
+(require-package 'window-numbering)
 
 
 ;; (global-set-key (kbd "C-RET") 'set-mark-command)
