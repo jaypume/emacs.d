@@ -1,6 +1,7 @@
 (require-package 'color-theme)
 (require-package 'color-theme-sanityinc-solarized)
 (require-package 'color-theme-sanityinc-tomorrow)
+(require-package 'monokai-theme)
 
 ;; custom theme packages
 ;; can be removed
