@@ -7,10 +7,12 @@
 
 ;; linux 下的设置
 (if (eq system-type 'gun/linux)
+    ()
     )
 
 ;; windows 下的设置
 (if (eq system-type 'windows-nt)
+    ()
     )
 
 ;; 提供插件
