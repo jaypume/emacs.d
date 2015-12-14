@@ -9,6 +9,7 @@
 (if (eq system-type 'gnu/linux)
 ;;    (set-default-font "-unknown-Droid Sans Fallback-normal-normal-normal-*-8-*-*-*-*-0-iso10646-1")
     (set-default-font "Droid Sans-10")
+  (setenv "LC_CTYPE" "zh_CN.UTF-8")
         )
 
 ;; windows 下的设置
