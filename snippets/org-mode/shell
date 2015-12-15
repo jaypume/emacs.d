@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: shell
+# key: shell
+# binding: direct-keybinding
+# --
+#+BEGIN_SRC shell
+
+#+END_SRC

@@ -50,10 +50,22 @@
 ;; window-numbering 安装和设置
 (require-package 'window-numbering)
 
+;; deft安装
+(require-package 'deft)
+(setq deft-extensions '("org"))
+(setq deft-directory "~/Dropbox/Notes")
+(setq deft-recursive t)
+(setq deft-use-filename-as-title t)
+
+;; 设置自动保存的时间  dkfsk
+(setq auto-save-timeout 30)
 
 ;; (global-set-key (kbd "C-RET") 'set-mark-command)
 ;; 没有测试成功，这个快捷键
 ;; (define-key global-map [C-return] 'set-mark-command)
+
+;; php mode
+(require-package 'php-mode)
 
 ;;------------------------------------------------------------------------------
 ;;2015.12.08 设置初始化之后的加载项
