@@ -67,6 +67,19 @@
 ;; php mode
 (require-package 'php-mode)
 
+;; 各种elisp跳转
+(require-package 'elisp-slime-nav)
+(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+  (add-hook hook 'elisp-slime-nav-mode))
+
+(require 'my-publish-project)
+
+
+
+
+
+
+
 ;;------------------------------------------------------------------------------
 ;;2015.12.08 设置初始化之后的加载项
 ;;------------------------------------------------------------------------------
@@ -74,7 +87,7 @@
       (add-hook 'after-init-hook mode))
       (list 'winner-mode
             'window-numbering-mode
-            'sr-speedbar-toggle
+;;            'sr-speedbar-toggle
       ))
 ;;----------------------------------------------------------------------------
 ;; 普杰的配置  the end

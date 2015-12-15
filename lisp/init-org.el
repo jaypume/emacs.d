@@ -79,8 +79,11 @@
 ;;      (ruby . t)
 ;;      (sh . t))))
 
+
+
 ;; use org-toc
 (add-hook 'org-mode-hook 'toc-org-enable)
+
 
 ;;设置org的有关的默认位置
 (add-hook 'org-mode-hook
@@ -88,7 +91,21 @@
             (setq org-default-notes-file (concat org-directory "note.org"))
             (define-key global-map "\C-cc" 'org-capture)
             ;; (define-key global-map "\C-," 'org-iswitchb)
-          ))
+
+            ))
+
+;; 暂时用不到了
+;; ;; org2blog  在orgmode 加载之后设置
+;; (require-package 'org2blog)
+;; (require 'org2blog-autoloads)
+;; (require 'auth-source)
+;; (let (credentials)
+;;   (setq org2blog/wp-blog-alist
+;;         `(("blog.jaypu.com"
+;;            :url "http://blog.jaypu.com/xmlrpc.php"
+;;            :username "jaypume"
+;;            :password ,(cadr credentials)))))
+
 
 ;; enable markdown-exporting to the export menu
 (eval-after-load "org"
