@@ -11,7 +11,7 @@
 ;;2015.12.08 解决中文终端乱码的问题
 (setenv "LANG" "zh_CN.UTF-8")
 
-;;2015.12.08 设置环境变量为git
+;;2015.12.08 设置环境变量 为git
 ;;; Set localized PATH for OS X
 (defun my-add-path (path-element)
   "Add the specified PATH-ELEMENT to the Emacs PATH."
@@ -38,12 +38,12 @@
 (global-set-key [remap comment-or-uncomment-region] 'my-comment-or-uncomment-region)
 
 ;;2015.12.09 org mode 相关设置
-(setq org-image-actual-width 300)
+;;(setq org-image-actual-width 300)
 
 ;; sr-speedbar 安装和设置
 (require-package 'sr-speedbar)
-(setq sr-speedbar-width 30)
-(setq sr-speedbar-auto-refresh nil)
+(setq sr-speedbar-width 20)
+(setq sr-speedbar-auto-refresh t)
 (setq sr-speedbar-right-side nil)
 ;;(setq sr-speedbar-toggle t)
 
@@ -72,12 +72,50 @@
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
   (add-hook hook 'elisp-slime-nav-mode))
 
-(require 'my-publish-project)
+
+;; helm init
+(require 'init-helm)
+
+(defun pujie/org-screenshot ()
+    "Take a screenshot into a time stamped unique-named file in the
+same directory as the org-buffer and insert a link to this file."
+    (interactive)
+    (setq filename
+          (concat
+           (make-temp-name
+            (concat
+             "images/"
+             (buffer-name)
+                    "_"
+                    (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
+    (call-process-shell-command "screencapture" nil nil nil "-i" filename)
+    (insert (concat "[[file:" filename "]]"))
+  (org-redisplay-inline-images)
+  )
+;; 另外一个http://stackoverflow.com/questions/17435995/paste-an-image-on-clipboard-to-emacs-org-mode-file-without-saving-it
 
 
 
+;; Toggle window dedication
+(defun toggle-window-dedicated ()
+"Toggle whether the current active window is dedicated or not"
+(interactive)
+(message
+ (if (let (window (get-buffer-window (current-buffer)))
+       (set-window-dedicated-p window
+        (not (window-dedicated-p window))))
+    "Window '%s' is dedicated"
+    "Window '%s' is normal")
+ (current-buffer)))
 
 
+;; neotree
+(require-package 'neotree)
+(setq neo-hidden-regexp-list '("^\\." "\\.cs\\.meta$" "\\.pyc$" "~$" "^#.*#$" "\\.elc$" "\\.html$"))
+;; project-explorer
+;;(require-package 'project-explorer)
+;;(require-package 'tree-mode)
+;;(require-package 'dirtree)
 
 
 ;;------------------------------------------------------------------------------

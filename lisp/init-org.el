@@ -79,11 +79,133 @@
 ;;      (ruby . t)
 ;;      (sh . t))))
 
+(setq org-publish-project-alist
+      '(
+        ("blog" :components ("blog-notes" "blog-static"))
+        ("blog-notes"
+         :base-directory "~/Dropbox/Notes/"
+         :base-extension "org"
+         :publishing-directory "~/Dropbox/应用/Pancake.io/"
+         :recursive t
+         ;;         :publishing-function org-publish-org-to-html ;;org 7.X
+         :publishing-function org-html-publish-to-html
+         ;;         :link-home "index.html"
+         ;;         :link-up "sitemap.html"
+         :html-link-home "http://note.jaypu.com/sitemap.html"
+         :html-link-up "sitemap.html"
+         :headline-levels 5
+         :section-numbers nil
+         :auto-preamble t
+         :auto-sitemap t                ; Generate sitemap.org automagically...
+         :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
+         :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
+         :author "普杰"
+         :email "i@jaypu.com"
+         ;;         :style    "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/main.css\"/>"
+         :html-head  "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/main.css\"/>"
+         :html-preamble "黑子的笔记-网页版"
+         :html-postamble " 评论系统代码(disqus,多说等等)
+     <p class=\"author\">Author: %a (%e)</p><p>Last Updated %d . Created by %c </p>"
+         )
+        ("blog-static"
+         :base-directory "~/Dropbox/Notes/"
+         :base-extension "css\\|js\\|pdf\\|png\\|jpg\\|gif\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/Dropbox/应用/Pancake.io/"
+         :recursive t
+         :publishing-function org-publish-attachment
+         )
+        ;;
+        ))
+
+
+
+;;使用这种方式必须保证函数名跟原来的一样
+;; (defadvice org-html-export-to-html (around org-html-export-to-html
+;;   (&optional async subtreep visible-only body-only ext-plist))
+;;   " Pujie hacked this function to modified the default export directory!!
+;; Return output file's name."
+;;   (interactive)
+;;   (let* ((extension (concat "." (or (plist-get ext-plist :html-extension)
+;; 				    org-html-extension
+;; 				    "html")))
+;;          ;;pujie
+;;          (file (org-export-output-file-name extension subtreep))
+;; 	 (file (concat "./exports/" (substring file 2 nil)))
+;; 	 (org-export-coding-system org-html-coding-system))
+;;     (org-export-to-file 'html file
+;;       async subtreep visible-only body-only ext-plist)
+;;     (message "heizi, the file is %s" file)
+;;     (message "heizi, the extension is %s" extension)
+;;     )
+;;   )
+
+
+(defun org-html-export-to-html (org-html-export-to-html &rest (&optional async subtreep visible-only body-only ext-plist))
+  " Pujie hacked this function to modified the default export directory!!
+Return output file's name."
+  (interactive)
+  (let* ((extension (concat "." (or (plist-get ext-plist :html-extension)
+				    org-html-extension
+				    "html")))
+         ;;pujie
+         (file (org-export-output-file-name extension subtreep))
+	 (file (concat "./exports/" (substring file 2 nil)))
+	 (org-export-coding-system org-html-coding-system))
+    (org-export-to-file 'html file
+      async subtreep visible-only body-only ext-plist)
+    (message "heizi, the file is %s" file)
+    (message "heizi, the extension is %s" extension)
+    )
+  )
+
+(advice-add 'html-heizi :around #'org-html-export-to-html)
+
+;; (defun his-tracing-function (orig-fun &rest args)
+;;   (message "display-buffer called with args %S" args)
+;;   (let ((res (apply orig-fun args)))
+;;     (message "display-buffer returned %S" res)
+;;     res))
+
+;; (advice-add 'display-buffer :around #'his-tracing-function)
+
+
+
+
+;;(setq org-export-publishing-directory "./exports")
+;; (setq org-publish-project-alist
+;;       '(("html"
+;;          :base-directory "~/Dropbox/Notes/"
+;;          :base-extension "org"
+;;          :publishing-directory "./exports"
+;;          :recursive t
+;;          :publishing-function org-html-export-to-html
+;;          )
+;;         ("pdf"
+;;          :base-directory "~/Dropbox/Notes/"
+;;          :base-extension "org"
+;;          :publishing-directory "./exports"
+;;          :recursive t
+;;          :publishing-function org-publish-org-to-pdf
+;;          )
+;;         ("all" :components ("html" "pdf"))))
+
+
+;; (defadvice org-export-output-file-name (around export-to-directories activate)
+;;   "alters the org export process to create a subdirectory for each exported org file"
+;;   (let* ((visited-file (buffer-file-name (buffer-base-buffer)))
+;;          (dir-name (file-name-sans-extension (file-name-nondirectory visited-file))))
+;;     (setf pub-dir
+;;           (concat (file-name-as-directory (or pub-dir "."))
+;;                   dir-name))
+;;     ad-do-it
+;;     (setf ad-return-value
+;;           (replace-regexp-in-string (regexp-quote (concat dir-name "." extension))
+;;                                     (concat "index." extension)
+;;                                     ad-return-value))))
 
 
 ;; use org-toc
 (add-hook 'org-mode-hook 'toc-org-enable)
-
 
 ;;设置org的有关的默认位置
 (add-hook 'org-mode-hook
