@@ -111,7 +111,15 @@ same directory as the org-buffer and insert a link to this file."
 
 ;; neotree
 (require-package 'neotree)
-(setq neo-hidden-regexp-list '("^\\." "\\.cs\\.meta$" "\\.pyc$" "~$" "^#.*#$" "\\.elc$" "\\.html$"))
+(setq neo-hidden-regexp-list
+      '("^\\."
+        "\\.cs\\.meta$"
+        "\\.pyc$"
+        "~$"
+        "^#.*#$"
+        "\\.elc$"
+        "\\.html$"
+        ))
 ;; project-explorer
 ;;(require-package 'project-explorer)
 ;;(require-package 'tree-mode)
