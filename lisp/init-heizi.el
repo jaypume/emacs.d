@@ -37,8 +37,6 @@
 )
 (global-set-key [remap comment-or-uncomment-region] 'my-comment-or-uncomment-region)
 
-;;2015.12.09 org mode 相关设置
-;;(setq org-image-actual-width 300)
 
 ;; sr-speedbar 安装和设置
 (require-package 'sr-speedbar)
@@ -53,7 +51,7 @@
 ;; deft安装
 (require-package 'deft)
 (setq deft-extensions '("org"))
-(setq deft-directory "~/Dropbox/Notes")
+(setq deft-directory "~/Dropbox/Org-mode Notebook/")
 (setq deft-recursive t)
 (setq deft-use-filename-as-title t)
 
@@ -75,33 +73,6 @@
 
 ;; helm init
 (require 'init-helm)
-
-;; 另外一个http://stackoverflow.com/questions/17435995/paste-an-image-on-clipboard-to-emacs-org-mode-file-without-saving-it
-
-(defun pujie/org-screenshot ()
-  "Take a screenshot into a time stamped unique-named file in the
-same directory as the org-buffer and insert a link to this file."
-  (interactive)
-  (org-display-inline-images)
-  (setq filename
-        (concat
-         (make-temp-name
-          (concat (file-name-nondirectory (buffer-file-name))
-                  "image/"
-                  (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
-  (unless (file-exists-p (file-name-directory filename))
-    (make-directory (file-name-directory filename)))
-  ; take screenshot
-  (if (eq system-type 'darwin)
-      (call-process "screencapture" nil nil nil "-i" filename))
-  (if (eq system-type 'gnu/linux)
-      (call-process "import" nil nil nil filename))
-  ; insert into file if correctly taken
-  (if (file-exists-p filename)
-      (insert (concat "[[file:" filename "]]"))
-    )
-    (org-redisplay-inline-images)
-  )
 
 
 ;; Toggle window dedication
@@ -129,10 +100,9 @@ same directory as the org-buffer and insert a link to this file."
         "\\.html$"
         "\\.*orgimage$"
         ))
-;; project-explorer
-;;(require-package 'project-explorer)
-;;(require-package 'tree-mode)
-;;(require-package 'dirtree)
+
+
+
 
 
 ;;------------------------------------------------------------------------------
