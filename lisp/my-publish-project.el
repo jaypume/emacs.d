@@ -11,7 +11,7 @@
          :publishing-function org-html-publish-to-html
          ;;         :link-home "index.html"
          ;;         :link-up "sitemap.html"
-         :html-link-home "index.html"
+         :html-link-home "http://note.jaypu.com/sitemap.html"
          :html-link-up "sitemap.html"
          :headline-levels 5
          :section-numbers nil

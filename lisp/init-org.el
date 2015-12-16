@@ -90,6 +90,7 @@
           (lambda()
             (setq org-default-notes-file (concat org-directory "note.org"))
             (define-key global-map "\C-cc" 'org-capture)
+            (define-key global-map "\C-cp" 'org-publish)
             ;; (define-key global-map "\C-," 'org-iswitchb)
 
             ))
