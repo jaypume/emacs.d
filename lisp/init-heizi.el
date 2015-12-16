@@ -76,24 +76,32 @@
 ;; helm init
 (require 'init-helm)
 
-(defun pujie/org-screenshot ()
-    "Take a screenshot into a time stamped unique-named file in the
-same directory as the org-buffer and insert a link to this file."
-    (interactive)
-    (setq filename
-          (concat
-           (make-temp-name
-            (concat
-             "images/"
-             (buffer-name)
-                    "_"
-                    (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
-    (call-process-shell-command "screencapture" nil nil nil "-i" filename)
-    (insert (concat "[[file:" filename "]]"))
-  (org-redisplay-inline-images)
-  )
 ;; 另外一个http://stackoverflow.com/questions/17435995/paste-an-image-on-clipboard-to-emacs-org-mode-file-without-saving-it
 
+(defun pujie/org-screenshot ()
+  "Take a screenshot into a time stamped unique-named file in the
+same directory as the org-buffer and insert a link to this file."
+  (interactive)
+  (org-display-inline-images)
+  (setq filename
+        (concat
+         (make-temp-name
+          (concat (file-name-nondirectory (buffer-file-name))
+                  "image/"
+                  (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
+  (unless (file-exists-p (file-name-directory filename))
+    (make-directory (file-name-directory filename)))
+  ; take screenshot
+  (if (eq system-type 'darwin)
+      (call-process "screencapture" nil nil nil "-i" filename))
+  (if (eq system-type 'gnu/linux)
+      (call-process "import" nil nil nil filename))
+  ; insert into file if correctly taken
+  (if (file-exists-p filename)
+      (insert (concat "[[file:" filename "]]"))
+    )
+    (org-redisplay-inline-images)
+  )
 
 
 ;; Toggle window dedication
@@ -119,6 +127,7 @@ same directory as the org-buffer and insert a link to this file."
         "^#.*#$"
         "\\.elc$"
         "\\.html$"
+        "\\.*orgimage$"
         ))
 ;; project-explorer
 ;;(require-package 'project-explorer)
