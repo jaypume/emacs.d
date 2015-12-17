@@ -51,7 +51,7 @@
 ;; deft安装
 (require-package 'deft)
 (setq deft-extensions '("org"))
-(setq deft-directory "~/Dropbox/Org-mode Notebook/")
+(setq deft-directory "~/Dropbox/Org Notes/")
 (setq deft-recursive t)
 (setq deft-use-filename-as-title t)
 
@@ -99,11 +99,8 @@
         "\\.elc$"
         "\\.html$"
         "\\.*orgimage$"
+        "ltxpng"
         ))
-
-
-
-
 
 ;;------------------------------------------------------------------------------
 ;;2015.12.08 设置初始化之后的加载项

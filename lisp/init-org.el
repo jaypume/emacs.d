@@ -83,7 +83,7 @@
       '(
         ("blog" :components ("blog-notes" "blog-static"))
         ("blog-notes"
-         :base-directory "~/Dropbox/Notes/"
+         :base-directory "~/Dropbox/Documents/Org Notes/"
          :base-extension "org"
          :publishing-directory "~/Dropbox/应用/Pancake.io/"
          :recursive t
@@ -108,7 +108,7 @@
      <p class=\"author\">Author: %a (%e)</p><p>Last Updated %d . Created by %c </p>"
          )
         ("blog-static"
-         :base-directory "~/Dropbox/Notes/"
+         :base-directory "~/Dropbox/Documents/Org Notes/"
          :base-extension "css\\|js\\|pdf\\|png\\|jpg\\|gif\\|mp3\\|ogg\\|swf"
          :publishing-directory "~/Dropbox/应用/Pancake.io/"
          :recursive t
@@ -139,26 +139,26 @@
 ;;     )
 ;;   )
 
+;; TODO someday to deal this problem
+;; (defun org-html-export-to-html (org-html-export-to-html &rest (&optional async subtreep visible-only body-only ext-plist))
+;;   " Pujie hacked this function to modified the default export directory!!
+;; Return output file's name."
+;;   (interactive)
+;;   (let* ((extension (concat "." (or (plist-get ext-plist :html-extension)
+;; 				    org-html-extension
+;; 				    "html")))
+;;          ;;pujie
+;;          (file (org-export-output-file-name extension subtreep))
+;; 	 (file (concat "./exports/" (substring file 2 nil)))
+;; 	 (org-export-coding-system org-html-coding-system))
+;;     (org-export-to-file 'html file
+;;       async subtreep visible-only body-only ext-plist)
+;;     (message "heizi, the file is %s" file)
+;;     (message "heizi, the extension is %s" extension)
+;;     )
+;;   )
 
-(defun org-html-export-to-html (org-html-export-to-html &rest (&optional async subtreep visible-only body-only ext-plist))
-  " Pujie hacked this function to modified the default export directory!!
-Return output file's name."
-  (interactive)
-  (let* ((extension (concat "." (or (plist-get ext-plist :html-extension)
-				    org-html-extension
-				    "html")))
-         ;;pujie
-         (file (org-export-output-file-name extension subtreep))
-	 (file (concat "./exports/" (substring file 2 nil)))
-	 (org-export-coding-system org-html-coding-system))
-    (org-export-to-file 'html file
-      async subtreep visible-only body-only ext-plist)
-    (message "heizi, the file is %s" file)
-    (message "heizi, the extension is %s" extension)
-    )
-  )
-
-(advice-add 'html-heizi :around #'org-html-export-to-html)
+;; (advice-add 'html-heizi :around #'org-html-export-to-html)
 
 ;; (defun his-tracing-function (orig-fun &rest args)
 ;;   (message "display-buffer called with args %S" args)
@@ -257,6 +257,30 @@ same directory as the org-buffer and insert a link to this file."
 ;;            :url "http://blog.jaypu.com/xmlrpc.php"
 ;;            :username "jaypume"
 ;;            :password ,(cadr credentials)))))
+
+
+;; 设置orgmode中Latex preview的处理程序
+(setq org-latex-create-formula-image-program 'dvipng)
+;;(setq org-latex-create-formula-image-program 'imagemagick)
+
+;;设置orgmode中Latex的路径，针对Mac有效，添加变量后面加了冒号会出错
+(setenv "PATH" (concat "/Library/TeX/texbin" (getenv "PATH")))
+(setq exec-path (append '("/Library/TeX/texbin") exec-path))
+
+;; http://emacs.stackexchange.com/questions/3387/how-to-enlarge-latex-fragments-in-org-mode-at-the-same-time-as-the-buffer-text
+;;TODO: 我觉得可以在这里添加一项功能，删除相关的图片
+(defun update-org-latex-fragments ()
+  (org-toggle-latex-fragment '(16))
+  (plist-put org-format-latex-options :scale text-scale-mode-amount)
+  (org-toggle-latex-fragment '(16)))
+(add-hook 'text-scale-mode-hook 'update-org-latex-fragments)
+
+
+;; minted 不知道怎么翻译这个
+;; (setq org-latex-listings 'minted)
+;; (require 'ox-latex)
+;; (add-to-list 'org-latex-packages-alist '("" "minted"))
+
 
 
 ;; enable markdown-exporting to the export menu

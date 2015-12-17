@@ -3,8 +3,8 @@
 (tabbar-mode 't)
 (global-set-key (kbd "<M-up>") 'tabbar-backward-group)
 (global-set-key (kbd "<M-down>") 'tabbar-forward-group)
-(global-set-key (kbd "M-p") 'tabbar-backward)
-(global-set-key (kbd "M-n") 'tabbar-forward)
+(global-set-key (kbd "M-p") 'tabbar-backward-tab)
+(global-set-key (kbd "M-n") 'tabbar-forward-tab)
 
 ;; 把自己打开的文件放入一个group
 ;; (setq tabbar-buffer-groups-function
