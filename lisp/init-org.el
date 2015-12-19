@@ -281,10 +281,75 @@ same directory as the org-buffer and insert a link to this file."
 ;; (require 'ox-latex)
 ;; (add-to-list 'org-latex-packages-alist '("" "minted"))
 
-
-
 ;; enable markdown-exporting to the export menu
 (eval-after-load "org"
   '(require 'ox-md nil t))
+
+;; ;;org-ref
+;; (require-package 'org-ref)
+
+;; (setq reftex-default-bibliography '("~/Dropbox/bibliography/references.bib"))
+
+;; ;; see org-ref for use of these variables
+;; (setq org-ref-bibliography-notes "~/Dropbox/bibliography/notes.org"
+;;       org-ref-default-bibliography '("~/Dropbox/bibliography/references.bib")
+;;       org-ref-pdf-directory "~/Dropbox/bibliography/bibtex-pdfs/")
+
+;; (setq helm-bibtex-bibliography "~/Dropbox/bibliography/references.bib")
+;; (setq helm-bibtex-library-path "~/Dropbox/bibliography/bibtex-pdfs")
+
+;; ;; open pdf with system pdf viewer (works on mac)
+;; (setq helm-bibtex-pdf-open-function
+;;   (lambda (fpath)
+;;     (start-process "open" "*open*" "open" fpath)))
+
+;; ;; alternative
+;; ;; (setq helm-bibtex-pdf-open-function 'org-open-file)
+
+;; (setq helm-bibtex-notes-path "~/Dropbox/bibliography/helm-bibtex-notes")
+
+
+;; https://wiki.freebsdchina.org/doc/r/reference
+;; 定义 org-mode-reftex-search
+(defun org-mode-reftex-search ()
+ ;; jump to the notes for the paper pointed to at from reftex search
+ (interactive)
+ (org-open-link-from-string (format "[[notes:%s]]" (reftex-citation t))))
+
+(setq org-link-abbrev-alist
+ '(("bib" . "~/Dropbox/reference/reference.bib::%s")
+   ("notes" . "~/Dropbox/reference/org/notes.org::#%s")
+   ("papers" . "~/Dropbox/reference/papers/%s.pdf")))
+
+;; 当使用 org-mode 时，自动调 RefTeX
+(defun org-mode-reftex-setup ()
+  (load-library "reftex")
+  (and (buffer-file-name) (file-exists-p (buffer-file-name))
+       (progn
+    ;; enable auto-revert-mode to update reftex when bibtex file changes on disk
+    (global-auto-revert-mode t)
+    (reftex-parse-all)
+    ;; add a custom reftex cite format to insert links
+    (reftex-set-cite-format
+      '((?b . "[[bib:%l][%l-bib]]")
+        (?c . "\\cite{%l}")
+        (?n . "[[notes:%l][%l-notes]]")
+        (?p . "[[papers:%l][%l-paper]]")
+        (?t . "%t")
+        (?h . "** %t\n:PROPERTIES:\n:Custom_ID: %l\n:END:\n[[papers:%l][%l-paper]]")))))
+  (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
+  ;; binding of  ”C-c (” to org-mode-reftex-search
+  (define-key org-mode-map (kbd "C-c (") 'org-mode-reftex-search))
+
+(add-hook 'org-mode-hook 'org-mode-reftex-setup)
+
+
+;; http://tex.stackexchange.com/questions/139824/disabling-the-select-reference-format-menu-in-reftex
+;;(setq reftex-default-bibliography
+;;      (quote
+;;       ("default.bib" "~/Dropbox/reference/reference.bib")))
+;; (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
+(setq reftex-ref-macro-prompt nil) ;; 取消额外的窗口
+
 
 (provide 'init-org)
