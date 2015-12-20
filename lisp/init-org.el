@@ -122,7 +122,7 @@
 
 
 ;;---------------------------------------------------------------------------
-;;pujie:覆盖export函数，修改生成的html默认位置
+;;pujie: 覆盖export函数，修改生成的html默认位置
 ;;---------------------------------------------------------------------------
 ;;使用这种方式必须保证函数名跟原来的一样
 ;; (defadvice org-html-export-to-html (around org-html-export-to-html
@@ -262,7 +262,9 @@ same directory as the org-buffer and insert a link to this file."
 ;;            :password ,(cadr credentials)))))
 
 
-;; 设置orgmode中Latex preview的处理程序
+;;---------------------------------------------------------------------------
+;;pujie: 设置orgmode中Latex preview的处理程序，以及Mac的Latex相关路径
+;;---------------------------------------------------------------------------
 (setq org-latex-create-formula-image-program 'dvipng)
 ;;(setq org-latex-create-formula-image-program 'imagemagick)
 
@@ -308,101 +310,6 @@ same directory as the org-buffer and insert a link to this file."
 (require-package 'zotxt)
 
 
-
-;;---------------------------------------------------------------------------
-;;pujie: org-ref
-;;---------------------------------------------------------------------------
-;; (add-to-list 'load-path "~/.emacs.d/org-ref/")
-
-;; (require 'org-ref)
-;; (setq reftex-default-bibliography '("~/Dropbox/bibliography/references.bib"))
-
-;; ;; see org-ref for use of these variables
-;; (setq org-ref-bibliography-notes "~/Dropbox/bibliography/notes.org"
-;;       org-ref-default-bibliography '("~/Dropbox/bibliography/references.bib")
-;;       org-ref-pdf-directory "~/Dropbox/bibliography/bibtex-pdfs/")
-
-;; (setq helm-bibtex-bibliography "~/Dropbox/bibliography/references.bib")
-;; (setq helm-bibtex-library-path "~/Dropbox/bibliography/bibtex-pdfs")
-
-;; ;; open pdf with system pdf viewer (works on mac)
-;; (setq helm-bibtex-pdf-open-function
-;;   (lambda (fpath)
-;;     (start-process "open" "*open*" "open" fpath)))
-
-;; ;; alternative
-;; ;; (setq helm-bibtex-pdf-open-function 'org-open-file)
-
-;; (setq helm-bibtex-notes-path "~/Dropbox/bibliography/helm-bibtex-notes")
-
-;;------------------------------------------------------------------------
-;; https://wiki.freebsdchina.org/doc/r/reference
-;; 定义 org-mode-reftex-search
-;; (defun org-mode-reftex-search ()
-;;  ;; jump to the notes for the paper pointed to at from reftex search
-;;  (interactive)
-;;  (org-open-link-from-string (format "[[notes:%s]]" (reftex-citation t))))
-
-;; (setq org-link-abbrev-alist
-;;  '(("bib" . "~/Dropbox/reference/reference.bib::%s")
-;;    ("notes" . "~/Dropbox/reference/org/notes.org::#%s")
-;;    ("papers" . "~/Dropbox/reference/papers/%s.pdf")))
-
-
-
-
-;;---------------------------------------------------------------------------
-;;pujie: reftex相关设置
-;;---------------------------------------------------------------------------
-;; http://tex.stackexchange.com/questions/139824/disabling-the-select-reference-format-menu-in-reftex
-;;(setq reftex-default-bibliography
-;;      (quote
-;;       ("default.bib" "~/Dropbox/reference/reference.bib")))
-;; (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
-;; (setq reftex-ref-macro-prompt nil) ;; 取消额外的窗口
-
-
-
-;;---------------------------------------------------------------------------
-;;pujie: TODO:把这些绑定代码挪到对应的位置， 设置org的有关的默认位置
-;;---------------------------------------------------------------------------
-(add-hook 'org-mode-hook
-          (lambda()
-            (setq org-default-notes-file (concat org-directory "note.org"))
-            (define-key global-map "\C-cc" 'org-capture)
-            (define-key global-map "\C-cp" 'org-publish)
-            ;; (define-key global-map "\C-," 'org-iswitchb)
-            ))
-
-;;---------------------------------------------------------------------------
-;;pujie: org-mode 自动设置reftex
-;;---------------------------------------------------------------------------
-(defun org-mode-reftex-setup ()
-  "hello org-mdoe -reftex setup"
-  (interactive)
-  (load-library "reftex")
-  (and (buffer-file-name) (file-exists-p (buffer-file-name))
-       (progn
-	 ;enable auto-revert-mode to update reftex when bibtex file changes on disk
-	 (global-auto-revert-mode t)
-	 (reftex-parse-all)
-	 ;add a custom reftex cite format to insert links
-	 (reftex-set-cite-format
-	  '((?b . "[[bib:%l][%l-bib]]")
-	    (?n . "[[notes:%l][%l-notes]]")
-	    (?p . "[[papers:%l][%l-paper]]")
-	    (?t . "%t")
-	    (?h . "** %t\n:PROPERTIES:\n:Custom_ID: %l\n:END:\n[[papers:%l][%l-paper]]")))))
-  (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
-  (define-key org-mode-map (kbd "C-c (") 'org-mode-reftex-search))
-
-(add-hook 'org-mode-hook 'org-mode-reftex-setup)
-
-(setq org-link-abbrev-alist
-      '(("bib" . "~/Dropbox/bibliography/refs.bib::%s")
-	("notes" . "~/Dropbox/bibliography/notes.org::#%s")
-	("papers" . "~/Dropbox/bibliography/papers/%s.pdf")))
-
 ;;---------------------------------------------------------------------------
 ;;pujie: get-bibtex-from-doi
 ;;---------------------------------------------------------------------------
@@ -423,6 +330,98 @@ same directory as the org-buffer and insert a link to this file."
      (kill-buffer (current-buffer))))
  (insert (decode-coding-string bibtex-entry 'utf-8))
  (bibtex-fill-entry))
+
+
+;;---------------------------------------------------------------------------
+;;pujie: reftex相关设置
+;;---------------------------------------------------------------------------
+;; http://tex.stackexchange.com/questions/139824/disabling-the-select-reference-format-menu-in-reftex
+;;(setq reftex-default-bibliography
+;;      (quote
+;;       ("default.bib" "~/Dropbox/reference/reference.bib")))
+;; (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
+;; (setq reftex-ref-macro-prompt nil) ;; 取消额外的窗口
+
+
+
+
+;;---------------------------------------------------------------------------
+;;pujie: org-mode 自动加载reftex相关
+;;---------------------------------------------------------------------------
+;;https://tincman.wordpress.com/2011/01/04/research-paper-management-with-emacs-org-mode-and-reftex/
+;; (defun org-mode-reftex-setup ()
+;;   "hello org-mdoe -reftex setup"
+;;   (interactive)
+;;   (load-library "reftex")
+;;   (and (buffer-file-name) (file-exists-p (buffer-file-name))
+;;        (progn
+;; 	 ;enable auto-revert-mode to update reftex when bibtex file changes on disk
+;; 	 (global-auto-revert-mode t)
+;; 	 (reftex-parse-all)
+;; 	 ;add a custom reftex cite format to insert links
+;; 	 (reftex-set-cite-format
+;; 	  '((?b . "[[bib:%l][%l-bib]]")
+;; 	    (?n . "[[notes:%l][%l-notes]]")
+;; 	    (?p . "[[papers:%l][%l-paper]]")
+;; 	    (?t . "%t")
+;; 	    (?h . "** %t\n:PROPERTIES:\n:Custom_ID: %l\n:END:\n[[papers:%l][%l-paper]]")))))
+;;   (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
+;;   (define-key org-mode-map (kbd "C-c (") 'org-mode-reftex-search))
+
+;; (add-hook 'org-mode-hook 'org-mode-reftex-setup)
+
+;; (setq org-link-abbrev-alist
+;;       '(("bib" . "~/Dropbox/bibliography/refs.bib::%s")
+;; 	("notes" . "~/Dropbox/bibliography/notes.org::#%s")
+;; 	("papers" . "~/Dropbox/bibliography/papers/%s.pdf")))
+
+;; (defun org-mode-reftex-search ()
+;;   ;;jump to the notes for the paper pointed to at from reftex search
+;;   (interactive)
+;;   (org-open-link-from-string (format "[[notes:%s]]" (first (reftex-citation t)))))
+
+
+
+
+
+;;---------------------------------------------------------------------------
+;;pujie: org-ref 设置
+;;---------------------------------------------------------------------------
+;;installation
+(require-package 'org-ref)
+
+;;https://github.com/jkitchin/org-ref
+(setq reftex-default-bibliography '("~/Dropbox/bibliography/references.bib"))
+
+;; see org-ref for use of these variables
+(setq org-ref-bibliography-notes "~/Dropbox/bibliography/notes.org"
+      org-ref-default-bibliography '("~/Dropbox/bibliography/references.bib")
+      org-ref-pdf-directory "~/Dropbox/bibliography/bibtex-pdfs/")
+
+(setq helm-bibtex-bibliography "~/Dropbox/bibliography/references.bib")
+(setq helm-bibtex-library-path "~/Dropbox/bibliography/bibtex-pdfs")
+
+;; open pdf with system pdf viewer (works on mac)
+(setq helm-bibtex-pdf-open-function
+  (lambda (fpath)
+    (start-process "open" "*open*" "open" fpath)))
+
+;; alternative
+;; (setq helm-bibtex-pdf-open-function 'org-open-file)
+(setq helm-bibtex-notes-path "~/Dropbox/bibliography/helm-bibtex-notes")
+
+
+
+;;---------------------------------------------------------------------------
+;;pujie: TODO:把这些绑定代码挪到对应的位置， 设置org的有关的默认位置
+;;---------------------------------------------------------------------------
+(add-hook 'org-mode-hook
+          (lambda()
+            (setq org-default-notes-file (concat org-directory "note.org"))
+            (define-key global-map "\C-cc" 'org-capture)
+            (define-key global-map "\C-cp" 'org-publish)
+            ;; (define-key global-map "\C-," 'org-iswitchb)
+            ))
 
 
 
