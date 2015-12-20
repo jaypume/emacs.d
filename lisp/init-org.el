@@ -79,6 +79,9 @@
 ;;      (ruby . t)
 ;;      (sh . t))))
 
+;;---------------------------------------------------------------------------
+;;pujie: 设置org project 发布到pancake.io
+;;---------------------------------------------------------------------------
 (setq org-publish-project-alist
       '(
         ("blog" :components ("blog-notes" "blog-static"))
@@ -118,7 +121,9 @@
         ))
 
 
-
+;;---------------------------------------------------------------------------
+;;pujie:覆盖export函数，修改生成的html默认位置
+;;---------------------------------------------------------------------------
 ;;使用这种方式必须保证函数名跟原来的一样
 ;; (defadvice org-html-export-to-html (around org-html-export-to-html
 ;;   (&optional async subtreep visible-only body-only ext-plist))
@@ -204,6 +209,10 @@
 ;;                                     ad-return-value))))
 
 
+
+;;---------------------------------------------------------------------------
+;;pujie: org-mode 截图函数
+;;---------------------------------------------------------------------------
 ;;另外一个http://stackoverflow.com/questions/17435995/paste-an-image-on-clipboard-to-emacs-org-mode-file-without-saving-it
 (defun pujie/org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the
@@ -232,20 +241,14 @@ same directory as the org-buffer and insert a link to this file."
 
 
 
-
-;; use org-toc
+;;---------------------------------------------------------------------------
+;;pujie: use org-toc
+;;---------------------------------------------------------------------------
 (add-hook 'org-mode-hook 'toc-org-enable)
 
-;;设置org的有关的默认位置
-(add-hook 'org-mode-hook
-          (lambda()
-            (setq org-default-notes-file (concat org-directory "note.org"))
-            (define-key global-map "\C-cc" 'org-capture)
-            (define-key global-map "\C-cp" 'org-publish)
-            ;; (define-key global-map "\C-," 'org-iswitchb)
-
-            ))
-
+;;---------------------------------------------------------------------------
+;;pujie: org2blog 设置
+;;---------------------------------------------------------------------------
 ;; 暂时用不到了
 ;; ;; org2blog  在orgmode 加载之后设置
 ;; (require-package 'org2blog)
@@ -267,27 +270,51 @@ same directory as the org-buffer and insert a link to this file."
 (setenv "PATH" (concat "/Library/TeX/texbin" (getenv "PATH")))
 (setq exec-path (append '("/Library/TeX/texbin") exec-path))
 
-;; http://emacs.stackexchange.com/questions/3387/how-to-enlarge-latex-fragments-in-org-mode-at-the-same-time-as-the-buffer-text
+
+
+;;---------------------------------------------------------------------------
+;;pujie: org 内嵌公式实时预览
+;;---------------------------------------------------------------------------
+;;http://emacs.stackexchange.com/questions/3387/how-to-enlarge-latex-fragments-in-org-mode-at-the-same-time-as-the-buffer-text
 ;;TODO: 我觉得可以在这里添加一项功能，删除相关的图片
 (defun update-org-latex-fragments ()
+  "ceshi 注释"
   (org-toggle-latex-fragment '(16))
   (plist-put org-format-latex-options :scale text-scale-mode-amount)
   (org-toggle-latex-fragment '(16)))
 (add-hook 'text-scale-mode-hook 'update-org-latex-fragments)
 
 
+;;---------------------------------------------------------------------------
+;;pujie: minted 这个功能还没想好如何处理
+;;---------------------------------------------------------------------------
 ;; minted 不知道怎么翻译这个
 ;; (setq org-latex-listings 'minted)
 ;; (require 'ox-latex)
 ;; (add-to-list 'org-latex-packages-alist '("" "minted"))
 
+;;---------------------------------------------------------------------------
+;;pujie: org 加载之后加载ox-mid
+;;---------------------------------------------------------------------------
 ;; enable markdown-exporting to the export menu
 (eval-after-load "org"
   '(require 'ox-md nil t))
 
-;; ;;org-ref
-;; (require-package 'org-ref)
 
+;;---------------------------------------------------------------------------
+;;pujie: zotelo
+;;---------------------------------------------------------------------------
+(require-package 'zotelo)
+(require-package 'zotxt)
+
+
+
+;;---------------------------------------------------------------------------
+;;pujie: org-ref
+;;---------------------------------------------------------------------------
+;; (add-to-list 'load-path "~/.emacs.d/org-ref/")
+
+;; (require 'org-ref)
 ;; (setq reftex-default-bibliography '("~/Dropbox/bibliography/references.bib"))
 
 ;; ;; see org-ref for use of these variables
@@ -308,48 +335,99 @@ same directory as the org-buffer and insert a link to this file."
 
 ;; (setq helm-bibtex-notes-path "~/Dropbox/bibliography/helm-bibtex-notes")
 
-
+;;------------------------------------------------------------------------
 ;; https://wiki.freebsdchina.org/doc/r/reference
 ;; 定义 org-mode-reftex-search
-(defun org-mode-reftex-search ()
- ;; jump to the notes for the paper pointed to at from reftex search
- (interactive)
- (org-open-link-from-string (format "[[notes:%s]]" (reftex-citation t))))
+;; (defun org-mode-reftex-search ()
+;;  ;; jump to the notes for the paper pointed to at from reftex search
+;;  (interactive)
+;;  (org-open-link-from-string (format "[[notes:%s]]" (reftex-citation t))))
 
-(setq org-link-abbrev-alist
- '(("bib" . "~/Dropbox/reference/reference.bib::%s")
-   ("notes" . "~/Dropbox/reference/org/notes.org::#%s")
-   ("papers" . "~/Dropbox/reference/papers/%s.pdf")))
-
-;; 当使用 org-mode 时，自动调 RefTeX
-(defun org-mode-reftex-setup ()
-  (load-library "reftex")
-  (and (buffer-file-name) (file-exists-p (buffer-file-name))
-       (progn
-    ;; enable auto-revert-mode to update reftex when bibtex file changes on disk
-    (global-auto-revert-mode t)
-    (reftex-parse-all)
-    ;; add a custom reftex cite format to insert links
-    (reftex-set-cite-format
-      '((?b . "[[bib:%l][%l-bib]]")
-        (?c . "\\cite{%l}")
-        (?n . "[[notes:%l][%l-notes]]")
-        (?p . "[[papers:%l][%l-paper]]")
-        (?t . "%t")
-        (?h . "** %t\n:PROPERTIES:\n:Custom_ID: %l\n:END:\n[[papers:%l][%l-paper]]")))))
-  (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
-  ;; binding of  ”C-c (” to org-mode-reftex-search
-  (define-key org-mode-map (kbd "C-c (") 'org-mode-reftex-search))
-
-(add-hook 'org-mode-hook 'org-mode-reftex-setup)
+;; (setq org-link-abbrev-alist
+;;  '(("bib" . "~/Dropbox/reference/reference.bib::%s")
+;;    ("notes" . "~/Dropbox/reference/org/notes.org::#%s")
+;;    ("papers" . "~/Dropbox/reference/papers/%s.pdf")))
 
 
+
+
+;;---------------------------------------------------------------------------
+;;pujie: reftex相关设置
+;;---------------------------------------------------------------------------
 ;; http://tex.stackexchange.com/questions/139824/disabling-the-select-reference-format-menu-in-reftex
 ;;(setq reftex-default-bibliography
 ;;      (quote
 ;;       ("default.bib" "~/Dropbox/reference/reference.bib")))
 ;; (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
-(setq reftex-ref-macro-prompt nil) ;; 取消额外的窗口
+;; (setq reftex-ref-macro-prompt nil) ;; 取消额外的窗口
 
 
+
+;;---------------------------------------------------------------------------
+;;pujie: TODO:把这些绑定代码挪到对应的位置， 设置org的有关的默认位置
+;;---------------------------------------------------------------------------
+(add-hook 'org-mode-hook
+          (lambda()
+            (setq org-default-notes-file (concat org-directory "note.org"))
+            (define-key global-map "\C-cc" 'org-capture)
+            (define-key global-map "\C-cp" 'org-publish)
+            ;; (define-key global-map "\C-," 'org-iswitchb)
+            ))
+
+;;---------------------------------------------------------------------------
+;;pujie: org-mode 自动设置reftex
+;;---------------------------------------------------------------------------
+(defun org-mode-reftex-setup ()
+  "hello org-mdoe -reftex setup"
+  (interactive)
+  (load-library "reftex")
+  (and (buffer-file-name) (file-exists-p (buffer-file-name))
+       (progn
+	 ;enable auto-revert-mode to update reftex when bibtex file changes on disk
+	 (global-auto-revert-mode t)
+	 (reftex-parse-all)
+	 ;add a custom reftex cite format to insert links
+	 (reftex-set-cite-format
+	  '((?b . "[[bib:%l][%l-bib]]")
+	    (?n . "[[notes:%l][%l-notes]]")
+	    (?p . "[[papers:%l][%l-paper]]")
+	    (?t . "%t")
+	    (?h . "** %t\n:PROPERTIES:\n:Custom_ID: %l\n:END:\n[[papers:%l][%l-paper]]")))))
+  (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
+  (define-key org-mode-map (kbd "C-c (") 'org-mode-reftex-search))
+
+(add-hook 'org-mode-hook 'org-mode-reftex-setup)
+
+(setq org-link-abbrev-alist
+      '(("bib" . "~/Dropbox/bibliography/refs.bib::%s")
+	("notes" . "~/Dropbox/bibliography/notes.org::#%s")
+	("papers" . "~/Dropbox/bibliography/papers/%s.pdf")))
+
+;;---------------------------------------------------------------------------
+;;pujie: get-bibtex-from-doi
+;;---------------------------------------------------------------------------
+(defun get-bibtex-from-doi (doi)
+ "Get a BibTeX entry from the DOI"
+ (interactive "MDOI: ")
+ (let ((url-mime-accept-string "text/bibliography;style=bibtex"))
+   (with-current-buffer 
+     (url-retrieve-synchronously 
+       (format "http://dx.doi.org/%s" 
+       	(replace-regexp-in-string "http://dx.doi.org/" "" doi)))
+     (switch-to-buffer (current-buffer))
+     (goto-char (point-max))
+     (setq bibtex-entry 
+     	  (buffer-substring 
+          	(string-match "@" (buffer-string))
+              (point)))
+     (kill-buffer (current-buffer))))
+ (insert (decode-coding-string bibtex-entry 'utf-8))
+ (bibtex-fill-entry))
+
+
+
+;;---------------------------------------------------------------------------
+;;pujie: 结束，后面不要放代码
+;;---------------------------------------------------------------------------
 (provide 'init-org)
+

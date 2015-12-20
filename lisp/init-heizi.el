@@ -1,6 +1,6 @@
 
 ;;----------------------------------------------------------------------------
-;; 普杰的配置
+;;pujie: 普杰的配置大杂烩
 ;;----------------------------------------------------------------------------
 ;;2015.12.04  设置打开文件的时候不打开新的窗口
 (setq ns-pop-up-frames nil)
@@ -37,7 +37,6 @@
 )
 (global-set-key [remap comment-or-uncomment-region] 'my-comment-or-uncomment-region)
 
-
 ;; sr-speedbar 安装和设置
 (require-package 'sr-speedbar)
 (setq sr-speedbar-width 20)
@@ -58,10 +57,11 @@
 ;; 设置自动保存的时间  dkfsk
 (setq auto-save-timeout 30)
 
-;; (global-set-key (kbd "C-RET") 'set-mark-command)
-;; 没有测试成功，这个快捷键
-;; (define-key global-map [C-return] 'set-mark-command)
 
+
+;;---------------------------------------------------------------------------
+;;pujie: php + elisp + ...
+;;---------------------------------------------------------------------------
 ;; php mode
 (require-package 'php-mode)
 
@@ -71,11 +71,11 @@
   (add-hook hook 'elisp-slime-nav-mode))
 
 
-;; helm init
-(require 'init-helm)
 
 
-;; Toggle window dedication
+;;---------------------------------------------------------------------------
+;;pujie: Toggle window dedication
+;;---------------------------------------------------------------------------
 (defun toggle-window-dedicated ()
 "Toggle whether the current active window is dedicated or not"
 (interactive)
@@ -87,8 +87,9 @@
     "Window '%s' is normal")
  (current-buffer)))
 
-
-;; neotree
+;;---------------------------------------------------------------------------
+;;pujie: neotree
+;;---------------------------------------------------------------------------
 (require-package 'neotree)
 (setq neo-hidden-regexp-list
       '("^\\."
@@ -102,8 +103,18 @@
         "ltxpng"
         ))
 
+
+;;---------------------------------------------------------------------------
+;;pujie: 设置url代理
+;;---------------------------------------------------------------------------
+
+(setq url-using-proxy t)
+(setq url-proxy-services '(("socks5" . "127.0.0.1:1080")))
+
+
+
 ;;------------------------------------------------------------------------------
-;;2015.12.08 设置初始化之后的加载项
+;;pujie: 设置初始化之后的加载项
 ;;------------------------------------------------------------------------------
 (mapc (lambda (mode)
       (add-hook 'after-init-hook mode))
@@ -112,6 +123,6 @@
 ;;            'sr-speedbar-toggle
       ))
 ;;----------------------------------------------------------------------------
-;; 普杰的配置  the end
+;;pujie: 普杰的配置  the end
 ;;----------------------------------------------------------------------------
 (provide 'init-heizi)
