@@ -445,52 +445,58 @@ same directory as the org-buffer and insert a link to this file."
 ;;---------------------------------------------------------------------------
 ;;pujie: 覆盖这个方法：org-ref-open-bibtex-notes
 ;;---------------------------------------------------------------------------
+;; 不用覆盖这个方法了，因为链接寻找方法已经自定义了
+;; ;;** Open notes from bibtex entry
+;; (defun pujie/org-ref-open-bibtex-notes (orig-fun &rest args)
+;;   "pujie hack this function"
+;;   (interactive)
+;;   (bibtex-beginning-of-entry)
+;;   (let* ((cb (current-buffer))
+;;          (bibtex-expand-strings t)
+;;          (entry (cl-loop for (key . value) in (bibtex-parse-entry t)
+;;                          collect (cons (downcase key) value)))
+;;          (key (reftex-get-bib-field "=key=" entry))
+;;          )
 
-;;** Open notes from bibtex entry
-(defun pujie/org-ref-open-bibtex-notes (orig-fun &rest args)
-  "pujie hack this function"
-  (interactive)
-  (bibtex-beginning-of-entry)
-  (let* ((cb (current-buffer))
-         (bibtex-expand-strings t)
-         (entry (cl-loop for (key . value) in (bibtex-parse-entry t)
-                         collect (cons (downcase key) value)))
-         (key (reftex-get-bib-field "=key=" entry))
-         )
+;;     ;; save key to clipboard to make saving pdf later easier by pasting.
+;;     (with-temp-buffer
+;;       (insert key)
+;;       (kill-ring-save (point-min) (point-max)))
 
-    ;; save key to clipboard to make saving pdf later easier by pasting.
-    (with-temp-buffer
-      (insert key)
-      (kill-ring-save (point-min) (point-max)))
+;;     ;; now look for entry in the notes file
+;;     (save-restriction
+;;       (if  org-ref-bibliography-notes
+;;           (find-file-other-window org-ref-bibliography-notes)
+;;         (error "Org-ref-bib-bibliography-notes is not set to anything"))
 
-    ;; now look for entry in the notes file
-    (save-restriction
-      (if  org-ref-bibliography-notes
-          (find-file-other-window org-ref-bibliography-notes)
-        (error "Org-ref-bib-bibliography-notes is not set to anything"))
+;;       (widen)
+;;       (goto-char (point-min))
+;;       ;; put new entry in notes if we don't find it.
+;;       (if (re-search-forward (format ":Custom_ID: %s$" key) nil 'end)
+;;           (funcall org-ref-open-notes-function)
+;;         ;; no entry found, so add one
+;;         (insert (org-ref-reftex-format-citation
+;;                  entry (concat "\n" org-ref-note-title-format)))
+;;         (insert (format
+;;                  "[[cite:%s]] [[file:%s][pdf]]\n\n"
+;;                  ;;pujie.modified fix this link through helm
+;;                  key
+;;                  (car (helm-bibtex-find-pdf entry))
+;;                  ))
+;;         (save-buffer)))))
 
-      (widen)
-      (goto-char (point-min))
-      ;; put new entry in notes if we don't find it.
-      (if (re-search-forward (format ":Custom_ID: %s$" key) nil 'end)
-          (funcall org-ref-open-notes-function)
-        ;; no entry found, so add one
-        (insert (org-ref-reftex-format-citation
-                 entry (concat "\n" org-ref-note-title-format)))
-        (insert (format
-                 "[[cite:%s]] [[file:%s][pdf]]\n\n"
-                 ;;pujie.modified fix this link through helm
-                 key (car (helm-bibtex-find-pdf entry))
-                 ))
-        (save-buffer)))))
-
-(advice-add 'org-ref-open-bibtex-notes :around #'pujie/org-ref-open-bibtex-notes)
+;; (advice-add 'org-ref-open-bibtex-notes :around #'pujie/org-ref-open-bibtex-notes)
 
 
 ;;---------------------------------------------------------------------------
-;;pujie:代码测试
+;;pujie: 修改默认寻找PDF的方式
 ;;---------------------------------------------------------------------------
+(defun pujie/org-ref-get-zotero-filename (key)
+"pujie defined find pdf files"
+  (car (helm-bibtex-find-pdf-in-field key))
+)
 
+(setq org-ref-get-pdf-filename-function (quote pujie/org-ref-get-zotero-filename))
 
 
 

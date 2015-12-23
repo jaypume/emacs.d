@@ -126,7 +126,16 @@
 (require-package 'projectile)
 (require-package 'helm-projectile)
 (helm-projectile-on)
+;; ibuffer 替代buffer-list
+(require-package 'ibuffer-projectile)
+(add-hook 'ibuffer-hook
+    (lambda ()
+      (ibuffer-projectile-set-filter-groups)
+      (unless (eq ibuffer-sorting-mode 'alphabetic)
+        (ibuffer-do-sort-by-alphabetic))))
+;(global-set-key "\C-xb" 'ibuffer)
 
+;;(require-package 'ibuffer-vc)
 
 
 ;;---------------------------------------------------------------------------
@@ -134,7 +143,6 @@
 ;;---------------------------------------------------------------------------
 ;; (setq url-using-proxy t)
 ;; (setq url-proxy-services '(("http" . "mi.jaypu.com:9102")))
-
 
 
 ;;----------------------------------------------------------------------------

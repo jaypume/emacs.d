@@ -36,14 +36,15 @@
 ;;-------------------------------------------------------------------------
 ;;http://stackoverflow.com/questions/9446673/asking-emacs-to-highlight-more-clearly-which-window-pane-has-the-focus-cursor
 (set-face-attribute  'mode-line
-                 nil
-                 :foreground "black"
-                 :background "red"
-                 :box '(:line-width 1 :style released-button))
+                     nil
+                     :foreground "yellow"
+                     :background "red"
+                     :box '(:line-width 1 :style released-button))
 (set-face-attribute  'mode-line-inactive
-                 nil                 :foreground "gray50"
-                 :background "black"
-                 :box '(:line-width 1 :style released-button))
+                     nil
+                     :foreground "grey60"
+                     :background "red"
+                     :box '(:line-width 1 :style released-button))
 ;;-------------------------------------------------------------------------
 
 
