@@ -9,3 +9,6 @@ smex-items
 ido.last
 /bookmarks
 srecode-map.el
+*.swp
+/projectile.cache
+/eww-bookmarks
