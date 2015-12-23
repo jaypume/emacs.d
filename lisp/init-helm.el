@@ -56,6 +56,29 @@
 (advice-add 'helm-ff-delete-char-backward :around #'fu/helm-find-files-navigate-back)
 ;;TODO:  tab键
 
+;;---------------------------------------------------------------------------
+;;pujie: 自动加载helm-bibtex
+;;---------------------------------------------------------------------------
+;; (autoload 'helm-bibtex "helm-bibtex" "" t)
+
+;; (setq helm-bibtex-bibliography "references.bib")
+;; (setq helm-bibtex-library-path "pdfs")
+
+;; ;; open pdf with system pdf viewer (works on mac)
+;; (setq helm-bibtex-pdf-open-function
+;;   (lambda (fpath)
+;;     (start-process "open" "*open*" "open" fpath)))
+
+;; ;; 设置file字段
+;; (setq helm-bibtex-pdf-field "file")
+
+
+;; 单独使用helm bibtex的时候对不同模式设置不同的cite方式
+;; (setq helm-bibtex-format-citation-functions
+;;   '((org-mode      . helm-bibtex-format-citation-org-link-to-PDF)
+;;     (latex-mode    . helm-bibtex-format-citation-cite)
+;;     (markdown-mode . helm-bibtex-format-citation-pandoc-citeproc)
+;;     (default       . helm-bibtex-format-citation-default)))
 
 
 ;;---------------------------------------------------------------------------

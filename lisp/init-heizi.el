@@ -46,13 +46,15 @@
 
 ;; window-numbering 安装和设置
 (require-package 'window-numbering)
+(window-numbering-mode 1)
+(winner-mode 1)
 
 ;; deft安装
-(require-package 'deft)
-(setq deft-extensions '("org"))
-(setq deft-directory "~/Dropbox/Org Notes/")
-(setq deft-recursive t)
-(setq deft-use-filename-as-title t)
+;; (require-package 'deft)
+;; (setq deft-extensions '("org"))
+;; (setq deft-directory "~/Dropbox/Org Notes/")
+;; (setq deft-recursive t)
+;; (setq deft-use-filename-as-title t)
 
 ;; 设置自动保存的时间  dkfsk
 (setq auto-save-timeout 30)
@@ -103,13 +105,24 @@
         "ltxpng"
         ))
 
+;;---------------------------------------------------------------------------
+;;pujie: projectile
+;;---------------------------------------------------------------------------
+;;eproject 没文档不好用
+;;(require-package 'eproject)
+;;projectile
+(require-package 'projectile)
+(require-package 'helm-projectile)
+(helm-projectile-on)
+
+
 
 ;;---------------------------------------------------------------------------
 ;;pujie: 设置url代理
 ;;---------------------------------------------------------------------------
 
-(setq url-using-proxy t)
-(setq url-proxy-services '(("socks5" . "127.0.0.1:1080")))
+;; (setq url-using-proxy t)
+;; (setq url-proxy-services '(("http" . "mi.jaypu.com:9102")))
 
 
 
@@ -118,11 +131,10 @@
 ;;------------------------------------------------------------------------------
 (mapc (lambda (mode)
       (add-hook 'after-init-hook mode))
-      (list 'winner-mode
-            'window-numbering-mode
-;;            'sr-speedbar-toggle
+      (list
+;;            'projectile-global-mode
       ))
 ;;----------------------------------------------------------------------------
-;;pujie: 普杰的配置  the end
+;;普杰的配置  the end
 ;;----------------------------------------------------------------------------
 (provide 'init-heizi)

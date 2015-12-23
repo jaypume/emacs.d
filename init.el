@@ -39,7 +39,7 @@
 ;; (require 'init-flycheck)
 
 (require 'init-recentf)
-(require 'init-ido)
+;; (require 'init-ido)
 (require 'init-yasnippet)
 (require 'init-hippie-expand)
 (require 'init-auto-complete)
@@ -47,10 +47,10 @@
 ;; (require 'init-sessions)
 (require 'init-fonts)
 ;; (require 'init-mmm)
-(require 'init-tabbar)
+;; (require 'init-tabbar)
 (require 'init-editing-utils)
-(require 'init-evil)
-(require 'init-matlab)
+;; (require 'init-evil)
+;; (require 'init-matlab)
 
 ;; (require 'init-vc)
 ;; (require 'init-darcs)
@@ -154,7 +154,7 @@
  '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("0fb6369323495c40b31820ec59167ac4c40773c3b952c264dd8651a3b704f6b5" "82e02b87e45ef7bee5d900ff4ebc12956ecdc9d797d6905f62758a7f2198305c" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
+    ("db08eb1e43f351490cfffd720db90600dd92d5cdf311f74350532ba71ae65c48" "0fb6369323495c40b31820ec59167ac4c40773c3b952c264dd8651a3b704f6b5" "82e02b87e45ef7bee5d900ff4ebc12956ecdc9d797d6905f62758a7f2198305c" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
  '(display-time-mode t)
  '(highlight-changes-colors (quote ("#FD5FF0" "#AE81FF")))
  '(highlight-tail-colors
@@ -168,13 +168,13 @@
      ("#A41F99" . 85)
      ("#49483E" . 100))))
  '(magit-diff-use-overlays nil)
+ '(monokai-high-contrast-mode-line t)
  '(org-agenda-files
    (quote
-    ("~/Dropbox/Projects/学习笔记/test.org" "~/Dropbox/Projects/学习笔记/org-mode学习笔记.org")))
- '(org-directory "~/Dropbox/Documents/Emacs-org/")
+    ("~/Dropbox/Emacs/Papers/移动云计算/thesis-draft.org" "~/Dropbox/Emacs/Notes/工具语言/Emacs Notes.org" "~/Dropbox/Emacs/Notes/note.org")))
  '(org-format-latex-options
    (quote
-    (:foreground default :background default :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+    (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")

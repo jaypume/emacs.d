@@ -4,6 +4,9 @@
 
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
+(define-key global-map "\C-c)" 'org-remove-file)
+(define-key global-map "\C-c()" 'org-agenda-file-to-front)
+
 
 ;; Various preferences
 (setq org-log-done t
@@ -78,6 +81,16 @@
 ;;      (python . t)
 ;;      (ruby . t)
 ;;      (sh . t))))
+
+;;---------------------------------------------------------------------------
+;;pujie: org mode 基本设置
+;;---------------------------------------------------------------------------
+; (setq org-agenda-files
+;   (quote
+;    ("~/Dropbox/Emacs/Papers/prject - test/pro test.org" "~/Dropbox/Projects/学习笔记/test.org" "~/Dropbox/Projects/学习笔记/org-mode学习笔记.org")))
+ (setq org-directory "~/Dropbox/Emacs/Notes/")
+
+
 
 ;;---------------------------------------------------------------------------
 ;;pujie: 设置org project 发布到pancake.io
@@ -279,12 +292,13 @@ same directory as the org-buffer and insert a link to this file."
 ;;---------------------------------------------------------------------------
 ;;http://emacs.stackexchange.com/questions/3387/how-to-enlarge-latex-fragments-in-org-mode-at-the-same-time-as-the-buffer-text
 ;;TODO: 我觉得可以在这里添加一项功能，删除相关的图片
-(defun update-org-latex-fragments ()
-  "ceshi 注释"
-  (org-toggle-latex-fragment '(16))
-  (plist-put org-format-latex-options :scale text-scale-mode-amount)
-  (org-toggle-latex-fragment '(16)))
-(add-hook 'text-scale-mode-hook 'update-org-latex-fragments)
+;; 这里会导致C-x 1 关闭其他窗口功能失效
+;; (defun update-org-latex-fragments ()
+;;   "ceshi 注释"
+;;   (org-toggle-latex-fragment '(16))
+;;   (plist-put org-format-latex-options :scale text-scale-mode-amount)
+;;   (org-toggle-latex-fragment '(16)))
+;; (add-hook 'text-scale-mode-hook 'update-org-latex-fragments)
 
 
 ;;---------------------------------------------------------------------------
@@ -320,7 +334,9 @@ same directory as the org-buffer and insert a link to this file."
    (with-current-buffer 
      (url-retrieve-synchronously 
        (format "http://dx.doi.org/%s" 
+;;      (format "http://www.doi2bib.org/#/doi/%s" 
        	(replace-regexp-in-string "http://dx.doi.org/" "" doi)))
+;;              (replace-regexp-in-string "http://www.doi2bib.org/#/doi/" "" doi)))
      (switch-to-buffer (current-buffer))
      (goto-char (point-max))
      (setq bibtex-entry 
@@ -389,26 +405,93 @@ same directory as the org-buffer and insert a link to this file."
 ;;---------------------------------------------------------------------------
 ;;installation
 (require-package 'org-ref)
+;; setup
+(require 'org-ref)
+;; ;;https://github.com/jkitchin/org-ref
+(setq reftex-default-bibliography '("_references.bib"))
 
-;;https://github.com/jkitchin/org-ref
-(setq reftex-default-bibliography '("~/Dropbox/bibliography/references.bib"))
+;; ;; see org-ref for use of these variables
+(setq org-ref-bibliography-notes "_notes.org"
+      org-ref-default-bibliography '("_references.bib")
+      org-ref-pdf-directory "_pdfs/")
 
-;; see org-ref for use of these variables
-(setq org-ref-bibliography-notes "~/Dropbox/bibliography/notes.org"
-      org-ref-default-bibliography '("~/Dropbox/bibliography/references.bib")
-      org-ref-pdf-directory "~/Dropbox/bibliography/bibtex-pdfs/")
 
-(setq helm-bibtex-bibliography "~/Dropbox/bibliography/references.bib")
-(setq helm-bibtex-library-path "~/Dropbox/bibliography/bibtex-pdfs")
+(setq helm-bibtex-bibliography "_references.bib")
+(setq helm-bibtex-library-path "_pdfs")
 
 ;; open pdf with system pdf viewer (works on mac)
 (setq helm-bibtex-pdf-open-function
   (lambda (fpath)
     (start-process "open" "*open*" "open" fpath)))
 
+;; 设置file字段
+(setq helm-bibtex-pdf-field "file")
+(global-set-key "\C-cf" 'org-ref-helm-insert-cite-link)
+
 ;; alternative
 ;; (setq helm-bibtex-pdf-open-function 'org-open-file)
-(setq helm-bibtex-notes-path "~/Dropbox/bibliography/helm-bibtex-notes")
+;; (setq helm-bibtex-notes-path "~/Dropbox/bibliography/helm-bibtex-notes")
+
+;; 设置自动doi的格式
+(setq
+ bibtex-autokey-name-year-separator "-"
+ bibtex-autokey-titleword-separator "-"
+ bibtex-autokey-titlewords 2
+ bibtex-autokey-titlewords-stretch 2
+ bibtex-autokey-year-length 4
+ bibtex-autokey-year-title-separator "-")
+
+
+;;---------------------------------------------------------------------------
+;;pujie: 覆盖这个方法：org-ref-open-bibtex-notes
+;;---------------------------------------------------------------------------
+
+;;** Open notes from bibtex entry
+(defun pujie/org-ref-open-bibtex-notes (orig-fun &rest args)
+  "pujie hack this function"
+  (interactive)
+  (bibtex-beginning-of-entry)
+  (let* ((cb (current-buffer))
+         (bibtex-expand-strings t)
+         (entry (cl-loop for (key . value) in (bibtex-parse-entry t)
+                         collect (cons (downcase key) value)))
+         (key (reftex-get-bib-field "=key=" entry))
+         )
+
+    ;; save key to clipboard to make saving pdf later easier by pasting.
+    (with-temp-buffer
+      (insert key)
+      (kill-ring-save (point-min) (point-max)))
+
+    ;; now look for entry in the notes file
+    (save-restriction
+      (if  org-ref-bibliography-notes
+          (find-file-other-window org-ref-bibliography-notes)
+        (error "Org-ref-bib-bibliography-notes is not set to anything"))
+
+      (widen)
+      (goto-char (point-min))
+      ;; put new entry in notes if we don't find it.
+      (if (re-search-forward (format ":Custom_ID: %s$" key) nil 'end)
+          (funcall org-ref-open-notes-function)
+        ;; no entry found, so add one
+        (insert (org-ref-reftex-format-citation
+                 entry (concat "\n" org-ref-note-title-format)))
+        (insert (format
+                 "[[cite:%s]] [[file:%s][pdf]]\n\n"
+                 ;;pujie.modified fix this link through helm
+                 key (car (helm-bibtex-find-pdf entry))
+                 ))
+        (save-buffer)))))
+
+(advice-add 'org-ref-open-bibtex-notes :around #'pujie/org-ref-open-bibtex-notes)
+
+
+;;---------------------------------------------------------------------------
+;;pujie:代码测试
+;;---------------------------------------------------------------------------
+
+
 
 
 
@@ -426,7 +509,7 @@ same directory as the org-buffer and insert a link to this file."
 
 
 ;;---------------------------------------------------------------------------
-;;pujie: 结束，后面不要放代码
+;;结束
 ;;---------------------------------------------------------------------------
 (provide 'init-org)
 
