@@ -168,6 +168,7 @@
      ("#A41F99" . 85)
      ("#49483E" . 100))))
  '(magit-diff-use-overlays nil)
+ '(monokai-distinct-fringe-background t)
  '(monokai-high-contrast-mode-line t)
  '(org-agenda-files
    (quote
@@ -178,6 +179,7 @@
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
+ '(projectile-global-mode t)
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(weechat-color-list

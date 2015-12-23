@@ -28,6 +28,24 @@
   (custom-set-variables `(custom-enabled-themes (quote ,custom-enabled-themes))))
 
 (add-hook 'after-init-hook 'reapply-themes)
+;;---------------------------------------------------------------------------------
+;;pujie: 设置 mode line的颜色
+;;-------------------------------------------------------------------------
+;;http://stackoverflow.com/questions/9446673/asking-emacs-to-highlight-more-clearly-which-window-pane-has-the-focus-cursor
+(set-face-attribute  'mode-line
+                 nil 
+                 :foreground "black"
+                 :background "yellow" 
+                 :box '(:line-width 1 :style released-button))
+(set-face-attribute  'mode-line-inactive
+                 nil 
+                 :foreground "gray50"
+                 :background "black" 
+                 :box '(:line-width 1 :style released-button))
+;;-------------------------------------------------------------------------
+
+
+
 
 
 
