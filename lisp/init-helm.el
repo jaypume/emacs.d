@@ -11,7 +11,7 @@
 (setq tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
 
 (helm-mode 1)
-;;(helm-autoresize-mode 1)
+(helm-autoresize-mode 1)
 ;(setq helm-ff-auto-update-initial-value nil)    ; 禁止自动补全
 
 

@@ -151,10 +151,9 @@
  '(column-number-mode t)
  '(compilation-message-face (quote default))
  '(cua-mode t nil (cua-base))
- '(custom-enabled-themes (quote (monokai)))
  '(custom-safe-themes
    (quote
-    ("db08eb1e43f351490cfffd720db90600dd92d5cdf311f74350532ba71ae65c48" "0fb6369323495c40b31820ec59167ac4c40773c3b952c264dd8651a3b704f6b5" "82e02b87e45ef7bee5d900ff4ebc12956ecdc9d797d6905f62758a7f2198305c" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "196cc00960232cfc7e74f4e95a94a5977cb16fd28ba7282195338f68c84058ec" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
+    ("0fb6369323495c40b31820ec59167ac4c40773c3b952c264dd8651a3b704f6b5" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "a1289424bbc0e9f9877aa2c9a03c7dfd2835ea51d8781a0bf9e2415101f70a7e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default)))
  '(display-time-mode t)
  '(highlight-changes-colors (quote ("#FD5FF0" "#AE81FF")))
  '(highlight-tail-colors
@@ -168,8 +167,6 @@
      ("#A41F99" . 85)
      ("#49483E" . 100))))
  '(magit-diff-use-overlays nil)
- '(monokai-distinct-fringe-background t)
- '(monokai-high-contrast-mode-line t)
  '(org-agenda-files
    (quote
     ("~/Dropbox/Emacs/Papers/移动云计算/thesis-draft.org" "~/Dropbox/Emacs/Notes/工具语言/Emacs Notes.org" "~/Dropbox/Emacs/Notes/note.org")))
@@ -179,7 +176,6 @@
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
- '(projectile-global-mode t)
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(weechat-color-list

@@ -11,7 +11,10 @@
 ;;2015.12.08 解决中文终端乱码的问题
 (setenv "LANG" "zh_CN.UTF-8")
 
-;;2015.12.08 设置环境变量 为git
+
+;;---------------------------------------------------------------------------
+;;pujie: 为git设置环境变量
+;;---------------------------------------------------------------------------
 ;;; Set localized PATH for OS X
 (defun my-add-path (path-element)
   "Add the specified PATH-ELEMENT to the Emacs PATH."
@@ -26,7 +29,10 @@
       (dolist (path-to-add my-paths (getenv "PATH"))
         (my-add-path path-to-add))))
 
-;;2015.12.08 设置注释或者反注释快捷键
+
+;;---------------------------------------------------------------------------
+;;pujie: 设置注释或者反注释快捷键
+;;---------------------------------------------------------------------------
 (global-set-key (kbd "C-c C-/") 'comment-or-uncomment-region)
 (defun my-comment-or-uncomment-region (beg end &optional arg)
   (interactive (if (use-region-p)
@@ -37,26 +43,34 @@
 )
 (global-set-key [remap comment-or-uncomment-region] 'my-comment-or-uncomment-region)
 
-;; sr-speedbar 安装和设置
+
+;;---------------------------------------------------------------------------
+;;pujie: sr-speedbar 安装和设置
+;;---------------------------------------------------------------------------
 (require-package 'sr-speedbar)
 (setq sr-speedbar-width 20)
 (setq sr-speedbar-auto-refresh t)
 (setq sr-speedbar-right-side nil)
 ;;(setq sr-speedbar-toggle t)
 
-;; window-numbering 安装和设置
+
+;;---------------------------------------------------------------------------
+;;pujie: window-numbering 安装和设置
+;;---------------------------------------------------------------------------
 (require-package 'window-numbering)
 (window-numbering-mode 1)
 (winner-mode 1)
 
-;; deft安装
+;;---------------------------------------------------------------------------
+;;pujie: deft安装
+;;---------------------------------------------------------------------------
 ;; (require-package 'deft)
 ;; (setq deft-extensions '("org"))
 ;; (setq deft-directory "~/Dropbox/Org Notes/")
 ;; (setq deft-recursive t)
 ;; (setq deft-use-filename-as-title t)
 
-;; 设置自动保存的时间  dkfsk
+;;pujie: 设置自动保存的时间
 (setq auto-save-timeout 30)
 
 
@@ -108,8 +122,6 @@
 ;;---------------------------------------------------------------------------
 ;;pujie: projectile
 ;;---------------------------------------------------------------------------
-;;eproject 没文档不好用
-;;(require-package 'eproject)
 ;;projectile
 (require-package 'projectile)
 (require-package 'helm-projectile)
@@ -120,20 +132,11 @@
 ;;---------------------------------------------------------------------------
 ;;pujie: 设置url代理
 ;;---------------------------------------------------------------------------
-
 ;; (setq url-using-proxy t)
 ;; (setq url-proxy-services '(("http" . "mi.jaypu.com:9102")))
 
 
 
-;;------------------------------------------------------------------------------
-;;pujie: 设置初始化之后的加载项
-;;------------------------------------------------------------------------------
-(mapc (lambda (mode)
-      (add-hook 'after-init-hook mode))
-      (list
-;;            'projectile-global-mode
-      ))
 ;;----------------------------------------------------------------------------
 ;;普杰的配置  the end
 ;;----------------------------------------------------------------------------
