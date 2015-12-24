@@ -42,18 +42,18 @@
 ;;---------------------------------------------------------------------------
 ;;http://emacs.stackexchange.com/questions/3798/how-do-i-make-pressing-ret-in-helm-find-files-open-the-directory
 ;; 回车
-(defun fu/helm-find-files-navigate-forward (orig-fun &rest args)
-  (if (file-directory-p (helm-get-selection))
-      (apply orig-fun args)
-    (helm-maybe-exit-minibuffer)))
-(advice-add 'helm-execute-persistent-action :around #'fu/helm-find-files-navigate-forward)
-(define-key helm-find-files-map (kbd "<return>") 'helm-execute-persistent-action)
-;; backspace
-(defun fu/helm-find-files-navigate-back (orig-fun &rest args)
-  (if (= (length helm-pattern) (length (helm-find-files-initial-input)))
-      (helm-find-files-up-one-level 1)
-    (apply orig-fun args)))
-(advice-add 'helm-ff-delete-char-backward :around #'fu/helm-find-files-navigate-back)
+;; (defun fu/helm-find-files-navigate-forward (orig-fun &rest args)
+;;   (if (file-directory-p (helm-get-selection))
+;;       (apply orig-fun args)
+;;     (helm-maybe-exit-minibuffer)))
+;; (advice-add 'helm-execute-persistent-action :around #'fu/helm-find-files-navigate-forward)
+;; (define-key helm-find-files-map (kbd "<return>") 'helm-execute-persistent-action)
+;; ;; backspace
+;; (defun fu/helm-find-files-navigate-back (orig-fun &rest args)
+;;   (if (= (length helm-pattern) (length (helm-find-files-initial-input)))
+;;       (helm-find-files-up-one-level 1)
+;;     (apply orig-fun args)))
+;; (advice-add 'helm-ff-delete-char-backward :around #'fu/helm-find-files-navigate-back)
 ;;TODO:  tab键
 
 ;;---------------------------------------------------------------------------
@@ -79,6 +79,29 @@
 ;;     (latex-mode    . helm-bibtex-format-citation-cite)
 ;;     (markdown-mode . helm-bibtex-format-citation-pandoc-citeproc)
 ;;     (default       . helm-bibtex-format-citation-default)))
+
+;;---------------------------------------------------------------------------
+;;pujie: helm mouse support
+;;---------------------------------------------------------------------------
+;; (defun helm-select-candidate-by-mouse (prefix event)
+;;   "Select helm candidate by using mouse(click).  With PREFIX, also execute its first action."
+;;   (interactive "P\ne")
+;;   (if (helm-alive-p)
+;;       (progn
+;;         (with-helm-buffer
+;;           (let* ((posn (elt event 1)) 
+;;                  (cursor (line-number-at-pos (point)))
+;;                  (pointer (line-number-at-pos (posn-point posn))))
+;;             (helm--next-or-previous-line (if (> pointer cursor)
+;;                                              'next
+;;                                            'previous)
+;;                                          (abs (- pointer cursor)))))
+;;         (when prefix (helm-maybe-exit-minibuffer)))
+;;     (mouse-drag-region event)))
+
+;; ;;(global-set-key "<down-mouse-1>" #'helm-select-candidate-by-mouse)
+;; ;;(global-set-key "<mouse-1>" #'ignore)
+;; (global-set-key [mouse-1] 'helm-select-candidate-by-mouse)
 
 
 ;;---------------------------------------------------------------------------

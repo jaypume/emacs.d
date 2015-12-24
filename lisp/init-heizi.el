@@ -4,6 +4,11 @@
 ;;----------------------------------------------------------------------------
 ;;2015.12.04  设置打开文件的时候不打开新的窗口
 (setq ns-pop-up-frames nil)
+;; 默认初始窗口为scratch
+(setq inhibit-startup-screen t)
+;; 设置 scratch 内容
+(setq initial-scratch-message ";;For your dream, PUJIE!!")
+
 ;;2015.12.04  添加multi-term支持
 (require 'multi-term)
 (setq multi-term-program "/bin/zsh")
