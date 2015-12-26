@@ -134,4 +134,33 @@
 ;; set some compilation shortcuts
 (require 'init-compile)
 
+
+;;---------------------------------------------------------------------------
+;;pujie: 设置注释或者反注释快捷键
+;;---------------------------------------------------------------------------
+(global-set-key (kbd "C-c C-/") 'comment-or-uncomment-region)
+(defun my-comment-or-uncomment-region (beg end &optional arg)
+  (interactive (if (use-region-p)
+                   (list (region-beginning) (region-end) nil)
+                 (list (line-beginning-position)
+                       (line-beginning-position 2))))
+  (comment-or-uncomment-region beg end arg)
+)
+(global-set-key [remap comment-or-uncomment-region] 'my-comment-or-uncomment-region)
+
+;;----------------------------------------------------------------------------
+;;pujie: avy跳转
+;;----------------------------------------------------------------------------
+(require-package 'avy)
+(global-set-key (kbd "C-;") 'avy-goto-char)
+(global-set-key (kbd "C-'") 'avy-goto-char-2)
+(global-set-key (kbd "M-g f") 'avy-goto-line)
+(global-set-key (kbd "M-g w") 'avy-goto-word-1)
+(global-set-key (kbd "M-g e") 'avy-goto-word-0)
+
+
+
+;;------------------------------------------------------------------------------
+;;配置到这里结束
+;;------------------------------------------------------------------------------
 (provide 'init-editing-utils)

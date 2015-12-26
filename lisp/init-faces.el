@@ -5,9 +5,12 @@
 (require-package 'molokai-theme)
 (require-package 'zenburn-theme)
 (require-package 'base16-theme)
+(require-package 'color-theme-modern)
+(require-package 'atom-dark-theme)
 
-
-;; custom theme packages
+;;-------------------------------------------------------------------------------
+;;pujie: 自定义的主题目录
+;;-------------------------------------------------------------------------------
 ;; can be removed
 ;; (add-to-list 'load-path
 ;;              (expand-file-name "lisp/custom-themes" user-emacs-directory))
@@ -15,23 +18,25 @@
 ;;       (expand-file-name "lisp/custom-themes" user-emacs-directory))
 ;; (require 'color-theme-blackboard)
 
-;;(require-package 'atom-dark-theme)
-
-;;2015.12.08 加载默认的主题monokai
-(load-theme 'monokai t)
+;;-------------------------------------------------------------------------------
+;;pujie: 默认加载的主题
+;;-------------------------------------------------------------------------------
+;;(load-theme 'bharadwaj t t)
+;; (enable-theme 'bharadwaj)
+;; (load-theme 'monokai t)
+;; (load-theme 'base16-summerfruit-light t)
 ;; (load-theme 'sanityinc-tomorrow-night t)
-;; (load-theme 'molokai t)
-;; (load-theme 'sanityinc-solarized-light t)
+;;(load-theme 'molokai t)
+ (load-theme 'sanityinc-solarized-light t)
 ;; (load-theme 'sanityinc-solarized-dark t)
 ;; (load-theme 'base16-solarized-dark t)
 ;; (load-theme 'zenburn)
 ;; (load-theme 'wombat)
 
 
-
-;; if you don't customize it, this is the theme you get
-;;(setq-default custom-enabled-themes '(monokai))
-
+;;-------------------------------------------------------------------------------
+;;pujie: 确保主题能够被使用（x）
+;;-------------------------------------------------------------------------------
 ;; Ensure that themes will be applied even if they have not been customized
 ;; (defun reapply-themes ()
 ;;   "Forcibly load the themes listed in `custom-enabled-themes'."
@@ -44,7 +49,7 @@
 
 
 
-;;---------------------------------------------------------------------------------
+;;-------------------------------------------------------------------------------
 ;;pujie: 设置 mode line的颜色
 ;;-------------------------------------------------------------------------
 ;;http://stackoverflow.com/questions/9446673/asking-emacs-to-highlight-more-clearly-which-window-pane-has-the-focus-cursor
@@ -62,5 +67,28 @@
 ;;-------------------------------------------------------------------------
 
 
+;;------------------------------------------------------------------------------
+;;pujie: 字体设置
+;;------------------------------------------------------------------------------
+;; mac 下的设置
+(if (eq system-type 'darwin)
+    ;; 修改默认的字体大小为14
+    ;; (set-default-font "-*-Menlo-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+    (set-default-font "Menlo-15")
+    (set-fontset-font "fontset-default" 'han '("STHeiti"))
+    )
 
-(provide 'init-themes)
+;; linux 下的设置
+(if (eq system-type 'gnu/linux)
+;;    (set-default-font "-unknown-Droid Sans Fallback-normal-normal-normal-*-8-*-*-*-*-0-iso10646-1")
+    (set-default-font "Droid Sans-10")
+  (setenv "LC_CTYPE" "zh_CN.UTF-8")
+        )
+
+;; windows 下的设置
+(if (eq system-type 'windows-nt)
+    ()
+    )
+
+
+(provide 'init-faces)
