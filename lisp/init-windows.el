@@ -60,7 +60,7 @@
 ;;         ))
 
 ;;----------------------------------------------------------------------------
-;;pujie: 安装popwin
+;;pujie: popwin安装与设置
 ;;----------------------------------------------------------------------------
 (require-package 'popwin)
 (require 'popwin)
@@ -68,6 +68,7 @@
 (setq display-buffer-function 'popwin:display-buffer)
 (push '("^\*helm .+\*$" :regexp t) popwin:special-display-config)
 (push '("^\*helm-.+\*$" :regexp t) popwin:special-display-config)
+(push '("^\*.+output\*$" :regexp t) popwin:special-display-config)
 
 
 ;;------------------------------------------------------------------------------

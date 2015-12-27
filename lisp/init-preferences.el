@@ -7,7 +7,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(TeX-shell "/bin/zsh")
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
  '(ansi-color-names-vector
@@ -19,6 +18,9 @@
    (quote
     ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default)))
  '(display-time-mode t)
+ '(exec-path
+   (quote
+    ("/usr/local/git/bin" "/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/Emacs.app/Contents/MacOS/bin-x86_64-10_9" "/Applications/Emacs.app/Contents/MacOS/libexec-x86_64-10_9" "/Applications/Emacs.app/Contents/MacOS/libexec" "/Applications/Emacs.app/Contents/MacOS/bin" "/Library/TeX/texbin/")))
  '(fci-rule-color "#eee8d5")
  '(highlight-changes-colors (quote ("#FD5FF0" "#AE81FF")))
  '(highlight-tail-colors
@@ -33,7 +35,11 @@
      ("#49483E" . 100))))
  '(org-agenda-files
    (quote
-    ("~/Dropbox/Emacs/Papers/移动云计算/thesis-draft.org" "~/Dropbox/Emacs/Notes/工具语言/Emacs Notes.org" "~/Dropbox/Emacs/Notes/note.org")))
+    ("~/Dropbox/Emacs/Papers/移动云计算/thesis-draft.org" "~/Dropbox/Emacs/Notes/工具语言/Emacs Notes.org" "~/Dropbox/Emacs/Notes/Org/capture.org")))
+ '(org-format-latex-options
+   (quote
+    (:foreground default :background default :scale 1.3 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+                 ("begin" "$1" "$" "$$" "\\(" "\\["))))
  '(org-highlight-latex-and-related (quote (latex script entities)))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")

@@ -26,18 +26,18 @@
 (define-key global-map "\C-c(" 'org-agenda-file-to-front)
 
 (setq
- ;; org-log-done t
-;;       org-completion-use-ido t
-;;       org-edit-timestamp-down-means-later t
-;;       org-agenda-start-on-weekday nil
-;;       org-agenda-span 14
-;;       org-agenda-include-diary t
+ org-log-done t
+ org-completion-use-ido t
+ org-edit-timestamp-down-means-later t
+ org-agenda-start-on-weekday nil
+ org-agenda-span 14
+ org-agenda-include-diary t
  org-agenda-window-setup 'current-window
-;;       org-fast-tag-selection-single-key 'expert
-;;       org-export-kill-product-buffer-when-displayed t
-;;       org-tags-column 80
- ;; org-startup-indented t
-      )
+ org-fast-tag-selection-single-key 'expert
+ org-export-kill-product-buffer-when-displayed t
+ org-tags-column 80
+ org-startup-indented t
+ )
 
 ;; ; Refile targets include this file and any file contributing to the agenda - up to 5 levels deep
 ;; (setq org-refile-targets (quote ((nil :maxlevel . 5) (org-agenda-files :maxlevel . 5))))
@@ -208,8 +208,8 @@ same directory as the org-buffer and insert a link to this file."
 ;;---------------------------------------------------------------------------
 ;;pujie: 设置orgmode中Latex preview的处理程序(dvipng)
 ;;---------------------------------------------------------------------------
-;;(setq org-latex-create-formula-image-program 'dvipng)
-(setq org-latex-create-formula-image-program 'imagemagick)
+(setq org-latex-create-formula-image-program 'dvipng)
+;;(setq org-latex-create-formula-image-program 'imagemagick)
 
 
 ;;---------------------------------------------------------------------------
@@ -260,13 +260,13 @@ same directory as the org-buffer and insert a link to this file."
 ;; (setq helm-bibtex-notes-path "~/Dropbox/bibliography/helm-bibtex-notes")
 
 ;; 设置自动doi的格式
-(setq
- bibtex-autokey-name-year-separator "-"
- bibtex-autokey-titleword-separator "-"
- bibtex-autokey-titlewords 2
- bibtex-autokey-titlewords-stretch 2
- bibtex-autokey-year-length 4
- bibtex-autokey-year-title-separator "-")
+;; (setq
+;;  bibtex-autokey-name-year-separator "-"
+;;  bibtex-autokey-titleword-separator "-"
+;;  bibtex-autokey-titlewords 2
+;;  bibtex-autokey-titlewords-stretch 2
+;;  bibtex-autokey-year-length 4
+;;  bibtex-autokey-year-title-separator "-")
 
 
 
