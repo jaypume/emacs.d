@@ -61,12 +61,16 @@
 (display-time-mode t)
 (setq display-time-24hr-format t)
 
+
+;;------------------------------------------------------------------------------
+;;pujie: 旁边显示行号
+;;------------------------------------------------------------------------------
 ;; display line number
 ;; (require 'linum)
 (require-package 'hlinum)
 ;; (require 'hlinum)
-(hlinum-activate)
-(global-linum-mode t)
+;;(hlinum-activate)
+;;(global-linum-mode nil)
 
 ;; visual line
 (global-visual-line-mode t)
@@ -158,6 +162,68 @@
 (global-set-key (kbd "M-g w") 'avy-goto-word-1)
 (global-set-key (kbd "M-g e") 'avy-goto-word-0)
 
+;;------------------------------------------------------------------------------
+;;pujie: 滚动半屏
+;;------------------------------------------------------------------------------
+(defun window-half-height ()
+  (max 1 (/ (1- (window-height (selected-window))) 6)))
+(defun scroll-up-half ()
+  (interactive)
+  (scroll-up (window-half-height)))
+(defun scroll-down-half ()
+  (interactive)
+  (scroll-down (window-half-height)))
+(global-set-key "\C-v" 'scroll-up-half)
+(global-set-key "\C-d" 'scroll-down-half)
+
+;;------------------------------------------------------------------------------
+;;pujie: 关闭提醒
+;;------------------------------------------------------------------------------
+(setq ring-bell-function 'ignore)
+;; quiet, please! No dinging!
+;; (setq visible-bell nil)
+;; (setq ring-bell-function (lambda ()
+;;                            (set-face-background 'default "DodgerBlue")
+;;                            (set-face-foreground 'default "black")))
+
+
+;;------------------------------------------------------------------------------
+;;pujie: 解决中文自动换行分词的问题
+;;------------------------------------------------------------------------------
+;;http://www.douban.com/group/topic/31132282/
+(add-hook 'org-mode-hook '(lambda ()
+                            (setq visual-line-fringe-indicators t)
+                            (visual-line-mode)
+                            (if visual-line-mode
+                                (setq word-wrap nil))))
+
+;;------------------------------------------------------------------------------
+;;pujie: 设置mac下meta key的问题
+;;------------------------------------------------------------------------------
+;;; I prefer cmd key for meta
+(if (eq system-type 'darwin)
+    (setq mac-option-key-is-meta nil
+          mac-command-key-is-meta t
+          mac-command-modifier 'meta
+          mac-option-modifier 'none)
+  )
+
+;;------------------------------------------------------------------------------
+;;pujie: 设置自动保存到文件,以及自动保存的时间间隔
+;;------------------------------------------------------------------------------
+(defun save-buffer-if-visiting-file (&optional args)
+  "Save the current buffer only if it is visiting a file"
+  (interactive)
+  (if (and (buffer-file-name) (buffer-modified-p))
+      (save-buffer args)))
+(add-hook 'auto-save-hook 'save-buffer-if-visiting-file)
+
+;;设置自动保存的时间
+;;这个是自动保存的字符间隔，如果小于20则默认20，来自官方文档：
+;;http://www.gnu.org/software/emacs/manual/html_node/emacs/Auto-Save-Control.html
+(setq auto-save-interval 1
+      ;;这个是默认的自动保存间隔时间
+      auto-save-timeout 60)
 
 
 ;;------------------------------------------------------------------------------

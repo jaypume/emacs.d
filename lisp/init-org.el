@@ -1,6 +1,6 @@
+;;(require-package 'org) ;;貌似没有用
 (require-package 'org-fstree)
-;;这个orgit 会导致latexpreview不起作用
-;;(require-package 'orgit)
+(require-package 'orgit);;这个orgit 会导致latexpreview不起作用
 
 ;;---------------------------------------------------------------------------
 ;;pujie: use org-toc
@@ -9,15 +9,20 @@
 (add-hook 'org-mode-hook 'toc-org-enable)
 
 
+
 ;;---------------------------------------------------------------------------
 ;;pujie: org mode 基本设置
 ;;---------------------------------------------------------------------------
+;;解决中文不自动换行的问题
+(add-hook 'org-mode-hook
+      (lambda () (setq truncate-lines nil)))
+
 ; (setq org-agenda-files
 ;   (quote
 ;    ("~/Dropbox/Emacs/Papers/prject - test/pro test.org" "~/Dropbox/Projects/学习笔记/test.org" "~/Dropbox/Projects/学习笔记/org-mode学习笔记.org")))
 (setq org-directory "~/Dropbox/Emacs/Notes/Org/")
 (setq org-default-notes-file (concat org-directory "capture.org"))
-(setq org-return-follows-link t)
+(setq org-return-follows-link nil)
 
 (define-key global-map "\C-cc" 'org-capture)
 (define-key global-map "\C-cl" 'org-store-link)
@@ -35,16 +40,16 @@
  org-agenda-window-setup 'current-window
  org-fast-tag-selection-single-key 'expert
  org-export-kill-product-buffer-when-displayed t
- org-tags-column 80
+ org-tags-column 60
  org-startup-indented t
  )
 
-;; ; Refile targets include this file and any file contributing to the agenda - up to 5 levels deep
-;; (setq org-refile-targets (quote ((nil :maxlevel . 5) (org-agenda-files :maxlevel . 5))))
-;; ; Targets start with the file name - allows creating level 1 tasks
-;; (setq org-refile-use-outline-path (quote file))
-;; ; Targets complete in steps so we start with filename, TAB shows the next level of targets etc
-;; (setq org-outline-path-complete-in-steps t)
+; Refile targets include this file and any file contributing to the agenda - up to 5 levels deep
+(setq org-refile-targets (quote ((nil :maxlevel . 5) (org-agenda-files :maxlevel . 5))))
+; Targets start with the file name - allows creating level 1 tasks
+(setq org-refile-use-outline-path (quote file))
+; Targets complete in steps so we start with filename, TAB shows the next level of targets etc
+(setq org-outline-path-complete-in-steps t)
 
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
@@ -161,6 +166,15 @@
 ;;pujie: org-mode 截图函数
 ;;---------------------------------------------------------------------------
 ;;另外一个http://stackoverflow.com/questions/17435995/paste-an-image-on-clipboard-to-emacs-org-mode-file-without-saving-it
+;; 生成子文件夹
+(defun pujie/org-image-folder()
+  "给出存放图片路径的目录"
+  ;; 使用子目录
+  ;;  (concat (file-name-nondirectory (buffer-file-name)) "image/")
+  ;; 不使用子目录
+  "_org-screenshot/"
+  )
+
 (defun pujie/org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the
 same directory as the org-buffer and insert a link to this file."
@@ -169,9 +183,9 @@ same directory as the org-buffer and insert a link to this file."
   (setq filename
         (concat
          (make-temp-name
-          (concat (file-name-nondirectory (buffer-file-name))
-                  "image/"
-                  (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
+          (concat
+           (pujie/org-image-folder)
+           (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
   (unless (file-exists-p (file-name-directory filename))
     (make-directory (file-name-directory filename)))
   ; take screenshot
@@ -184,7 +198,14 @@ same directory as the org-buffer and insert a link to this file."
       (insert (concat "[[file:" filename "]]"))
     )
     (org-redisplay-inline-images)
-  )
+    )
+
+(global-set-key "\C-cmc" 'pujie/org-screenshot)
+
+(defun pujie/org-import-image()
+  "拷贝剪贴板中的图片，放入本地文件夹，并在org文件中生成链接和显示图片"
+    )
+
 
 
 
@@ -323,6 +344,8 @@ same directory as the org-buffer and insert a link to this file."
 ;;         (save-buffer)))))
 
 ;; (advice-add 'org-ref-open-bibtex-notes :around #'pujie/org-ref-open-bibtex-notes)
+
+
 
 
 

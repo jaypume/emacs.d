@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: tcr
+# key: tcr
+# binding: direct-keybinding
+# --
+\textcolor{red}{}

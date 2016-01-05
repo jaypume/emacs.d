@@ -55,6 +55,11 @@
 ;; (setq url-using-proxy t)
 ;; (setq url-proxy-services '(("http" . "mi.jaypu.com:9102")))
 
-
+;;------------------------------------------------------------------------------
+;;pujie: 用外部程序打开
+;;------------------------------------------------------------------------------
+(require-package 'openwith)
+(openwith-mode t)
+(setq openwith-associations '(("\\.pdf\\'" "open" (file))))
 
 (provide 'init-tools)

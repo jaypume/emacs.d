@@ -42,17 +42,17 @@
              (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
              (setq TeX-command-default "XeLaTeX")
              (setq TeX-save-query nil)
-             (setq TeX-show-compilation t)))
+             (setq TeX-show-compilation t)));;这边在hook后执行，所以以这个为准
 
 ;;------------------------------------------------------------------------------
 ;;pujie: 2015.12.07 使用skim为默认的查看方式，并启动emacs的服务器模式，使得skim可以和emacs交互
 ;;------------------------------------------------------------------------------
 ;; Skim's displayline is used for forward search (from .tex to .pdf)
-;; option -b highlights the current line; option -g opens Skim in the background  
-(setq TeX-view-program-selection '((output-pdf "PDF Viewer")))
-(setq TeX-view-program-list
-     '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
-(server-start); start emacs in server mode so that skim can talk to it
+;; option -b highlights the current line; option -g opens Skim in the background
+;; (setq TeX-view-program-selection '((output-pdf "PDF Viewer")))
+;; (setq TeX-view-program-list
+;;      '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
+;; (server-start); start emacs in server mode so that skim can talk to it
 
 
 ;;------------------------------------------------------------------------------

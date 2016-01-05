@@ -12,6 +12,7 @@
  '(ansi-color-names-vector
    (vector "#657b83" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#fdf6e3"))
  '(bib-auto-capitalize nil)
+ '(cfs--current-profile-name "profile2" t)
  '(compilation-message-face (quote default))
  '(cua-mode t nil (cua-base))
  '(custom-safe-themes
@@ -35,12 +36,11 @@
      ("#49483E" . 100))))
  '(org-agenda-files
    (quote
-    ("~/Dropbox/Emacs/Papers/移动云计算/thesis-draft.org" "~/Dropbox/Emacs/Notes/工具语言/Emacs Notes.org" "~/Dropbox/Emacs/Notes/Org/capture.org")))
+    ("~/Dropbox/Emacs/Papers/移动云计算/thesis.org" "~/Dropbox/Emacs/Notes/工具语言/Emacs Notes.org" "~/Dropbox/Emacs/Notes/Org/capture.org")))
  '(org-format-latex-options
    (quote
-    (:foreground default :background default :scale 1.3 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+    (:foreground default :background default :scale 1.8 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
                  ("begin" "$1" "$" "$$" "\\(" "\\["))))
- '(org-highlight-latex-and-related (quote (latex script entities)))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
  '(show-paren-mode t)

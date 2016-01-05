@@ -66,9 +66,13 @@
 (require 'popwin)
 (popwin-mode 1)
 (setq display-buffer-function 'popwin:display-buffer)
+;;(push '("^\*helm\*$" :regexp t) popwin:special-display-config)
 (push '("^\*helm .+\*$" :regexp t) popwin:special-display-config)
 (push '("^\*helm-.+\*$" :regexp t) popwin:special-display-config)
-(push '("^\*.+output\*$" :regexp t) popwin:special-display-config)
+(push '("^\*.+help.+\*$" :regexp t) popwin:special-display-config)
+
+;; 貌似没有起效果
+;;(push '("^\*.+output\*$" :regexp t) popwin:special-display-config)
 
 
 ;;------------------------------------------------------------------------------
