@@ -345,7 +345,19 @@ same directory as the org-buffer and insert a link to this file."
 
 ;; (advice-add 'org-ref-open-bibtex-notes :around #'pujie/org-ref-open-bibtex-notes)
 
+;;------------------------------------------------------------------------------
+;;pujie: 自定义orgmode下加粗字体和颜色
+;;------------------------------------------------------------------------------
+;;; custom org emhasis color
+(require 'org)
+(require 'cl)   ; for delete*
+(setq org-emphasis-alist
+      (cons '("+" '(:strike-through t :foreground "gray"))
+            (delete* "+" org-emphasis-alist :key 'car :test 'equal)))
 
+(setq org-emphasis-alist
+      (cons '("*" '(:emphasis t :foreground "blue"))
+            (delete* "*" org-emphasis-alist :key 'car :test 'equal)))
 
 
 

@@ -26,10 +26,12 @@
 ;; (load-theme 'monokai t)
 ;; (load-theme 'base16-summerfruit-light t)
 ;; (load-theme 'sanityinc-tomorrow-night t)
+ (load-theme 'sanityinc-tomorrow-day t)
 ;;(load-theme 'molokai t)
- (load-theme 'sanityinc-solarized-light t)
+;; (load-theme 'sanityinc-solarized-light t)
 ;; (load-theme 'sanityinc-solarized-dark t)
 ;; (load-theme 'base16-solarized-dark t)
+;; (load-theme 'base16-monokai-light t)
 ;; (load-theme 'zenburn)
 ;; (load-theme 'wombat)
 

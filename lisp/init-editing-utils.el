@@ -177,6 +177,22 @@
 (global-set-key "\C-d" 'scroll-down-half)
 
 ;;------------------------------------------------------------------------------
+;;pujie: 恢复光标位置
+;;------------------------------------------------------------------------------
+;; http://emacs.stackexchange.com/questions/61/let-emacs-move-the-cursor-off-screen/2273#2273
+
+(require-package 'scroll-restore)
+(scroll-restore-mode 1)
+;; Allow scroll-restore to modify the cursor face
+(setq scroll-restore-handle-cursor t)
+;; Make the cursor invisible while POINT is off-screen
+(setq scroll-restore-cursor-type nil)
+;; Jump back to the original cursor position after scrolling
+(setq scroll-restore-jump-back t)
+;; Toggle scroll-restore-mode with the Scroll Lock key
+(global-set-key (kbd "<Scroll_Lock>") 'scroll-restore-mode)
+
+;;------------------------------------------------------------------------------
 ;;pujie: 关闭提醒
 ;;------------------------------------------------------------------------------
 (setq ring-bell-function 'ignore)
