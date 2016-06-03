@@ -62,4 +62,27 @@
 (openwith-mode t)
 (setq openwith-associations '(("\\.pdf\\'" "open" (file))))
 
+
+;;------------------------------------------------------------------------------
+;;pujie: 顺滑滚动
+;;------------------------------------------------------------------------------
+;; 感觉没什么卵用
+;; (require-package 'smooth-scrolling)
+;; (smooth-scrolling-mode 1)
+
+;;------------------------------------------------------------------------------
+;;pujie: 保存session 和 desktop
+;;------------------------------------------------------------------------------
+(require-package 'session)
+(add-hook 'after-init-hook 'session-initialize) 
+(load "desktop")
+(desktop-load-default)
+(desktop-read);
+
+;;------------------------------------------------------------------------------
+;;pujie:  minimap
+;;------------------------------------------------------------------------------
+(require-package 'minimap)
+
+
 (provide 'init-tools)

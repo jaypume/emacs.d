@@ -14,3 +14,7 @@ srecode-map.el
 /eww-bookmarks
 /projectile-bookmarks.eld
 /url/*
+.emacs.desktop
+.emacs.desktop.lock
+.session
+SessionDesktop.el

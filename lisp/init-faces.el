@@ -79,7 +79,7 @@
 (if (eq system-type 'darwin)
     ;; 修改默认的字体大小为14
     ;; (set-default-font "-*-Menlo-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-     (set-default-font "Menlo-15")
+     (set-default-font "Menlo-14")
      (set-fontset-font "fontset-default" 'han '("STHeiti"))
     )
 

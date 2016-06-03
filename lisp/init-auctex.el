@@ -106,6 +106,33 @@
 
 
 ;;------------------------------------------------------------------------------
+;;pujie: tex mode 添加frame索引
+;;------------------------------------------------------------------------------
+(defun my-merge-imenu ()
+  (interactive)
+  (let ((mode-imenu (imenu-default-create-index-function))
+        (custom-imenu (imenu--generic-function imenu-generic-expression)))
+    (append mode-imenu custom-imenu)))
+
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+            (set-variable
+             'imenu-generic-expression
+            (list
+              (list
+               nil
+               "^\\([a-zA-Z][-a-zA-Z0-9._]*\\)\\s-*[&|]?=" 1)
+             (list
+             "frame"
+             "^\\begin{frame}{\\(.+\\)}$" 1)
+              ;; "^\\begin{frame}{[a-zA-Z][-a-zA-Z0-9._]*}" 1)
+             )
+            );;set-variable
+            (setq imenu-create-index-function 'my-merge-imenu)
+            );;lambda
+          );;add-hook
+
+;;------------------------------------------------------------------------------
 ;;配置到此结束
 ;;------------------------------------------------------------------------------
 (provide 'init-auctex)
