@@ -79,22 +79,8 @@
 ;;------------------------------------------------------------------------------
 ;;pujie: 设置proxy
 ;;------------------------------------------------------------------------------
-;; (setq url-proxy-services '(("no_proxy" . "work\\.com")
-;;                            ("http"  . "127.0.0.1:808")
-;;                            ("https" . "openproxy.huawei.com:8080")
-;;                            ("ftp"   . "10.61.63.220:2121")
-;;                            ))
 
-;; (setq url-proxy-services '(
-;;                            ("no_proxy" . "^\\(localhost\\|10.*\\)")
-;;                            ("http"  . "p00390888:4QI\#1331@proxyus3.huawei.com:8080")
-;;                            ("https" . "p00390888:4QI\#1331@proxyus3.huawei.com:8080")
-;;                            ))
 
-(setq url-http-proxy-basic-auth-storage
-      (list (list "openproxy.huawei.com:8080"
-                  (cons "Input your LDAP UID !"
-                        (base64-encode-string "username:passwd")))))
 
 
 
